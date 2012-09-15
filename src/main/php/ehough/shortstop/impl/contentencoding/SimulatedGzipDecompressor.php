@@ -22,7 +22,7 @@
 /**
  * Deflates data according to RFC 1952. Simulation instead of native.
  */
-class ehough_shortstop_http_contentencoding_SimulatedGzipDecompressor extends ehough_shortstop_impl_contentencoding_AbstractDecompressorCommand
+class ehough_shortstop_impl_contentencoding_SimulatedGzipDecompressor extends ehough_shortstop_impl_contentencoding_AbstractDecompressorCommand
 {
     /** @var ehough_epilog_api_ILogger */
     private $_logger;

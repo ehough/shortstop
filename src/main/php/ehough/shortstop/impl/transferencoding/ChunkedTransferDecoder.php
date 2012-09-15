@@ -22,7 +22,7 @@
 /**
  * Decodes messages that are Transfer-Encoding: chunked
  */
-class org_tubepress_impl_http_transferencoding_ChunkedTransferDecoder implements ehough_chaingang_api_Command
+class ehough_shortstop_impl_transferencoding_ChunkedTransferDecoder implements ehough_chaingang_api_Command
 {
     /** @var ehough_epilog_api_ILogger */
     private $_logger;

@@ -19,17 +19,11 @@
  *
  */
 
-/**
- * Handles HTTP responses.
- */
-interface ehough_shortstop_api_HttpResponseHandler
+class ehough_shortstop_impl_transports_FopenTransportTest extends ehough_shortstop_impl_transports_AbstractHttpTransportTest
 {
-    /**
-     * Handles an HTTP response.
-     *
-     * @param ehough_shortstop_api_HttpResponse $response The HTTP response.
-     *
-     * @return string The raw entity body of the response. May be empty or null.
-     */
-    function handle(ehough_shortstop_api_HttpResponse $response);
+
+    protected function _getSutInstance(ehough_shortstop_spi_HttpMessageParser $mp)
+    {
+        return new ehough_shortstop_impl_transports_FopenTransport($mp);
+    }
 }

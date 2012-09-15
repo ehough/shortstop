@@ -28,7 +28,7 @@
  * the HTTP transport implementations.
  *
  */
-class org_tubepress_impl_http_transports_FsockOpenTransport extends ehough_shortstop_impl_transports_AbstractHttpTransport
+class ehough_shortstop_impl_transports_FsockOpenTransport extends ehough_shortstop_impl_transports_AbstractHttpTransport
 {
     private $_handle;
 

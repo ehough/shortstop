@@ -39,7 +39,7 @@ interface ehough_shortstop_api_HttpClient
      * Execute a given HTTP request.
      *
      * @param ehough_shortstop_api_HttpRequest         $request The HTTP request.
-     * @param ehough_shortshop_api_HttpResponseHandler $handler The HTTP response handler.
+     * @param ehough_shortstop_api_HttpResponseHandler $handler The HTTP response handler.
      *
      * @throws ehough_shortstop_api_exception_RuntimeException If something goes wrong.
      *
@@ -47,6 +47,6 @@ interface ehough_shortstop_api_HttpClient
      */
     function executeAndHandleResponse(
         ehough_shortstop_api_HttpRequest $request,
-        ehough_shortshop_api_HttpResponseHandler $handler
+        ehough_shortstop_api_HttpResponseHandler $handler
     );
 }

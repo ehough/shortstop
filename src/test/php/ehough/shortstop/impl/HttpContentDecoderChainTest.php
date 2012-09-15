@@ -19,17 +19,26 @@
  *
  */
 
-/**
- * Handles HTTP responses.
- */
-interface ehough_shortstop_api_HttpResponseHandler
+class ehough_shortstop_impl_HttpContentDecoderChainTest extends ehough_shortstop_impl_AbstractDecoderChainTest
 {
-    /**
-     * Handles an HTTP response.
-     *
-     * @param ehough_shortstop_api_HttpResponse $response The HTTP response.
-     *
-     * @return string The raw entity body of the response. May be empty or null.
-     */
-    function handle(ehough_shortstop_api_HttpResponse $response);
+    protected function buildSut(ehough_chaingang_api_Chain $chain)
+    {
+        return new ehough_shortstop_impl_HttpContentDecoderChain($chain);
+    }
+
+    protected function getHeaderName()
+    {
+        return ehough_shortstop_api_HttpResponse::HTTP_HEADER_CONTENT_ENCODING;
+    }
+
+    protected function getHeaderValue()
+    {
+        return 'chuNkEd';
+    }
+
+    function testGetAcceptEncodingHeader()
+    {
+        $this->assertEquals('gzip;q=1.0, deflate;q=0.5', $this->getSut()->getAcceptEncodingHeaderValue());
+    }
+
 }

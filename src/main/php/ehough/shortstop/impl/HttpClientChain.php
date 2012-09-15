@@ -107,7 +107,7 @@ class ehough_shortstop_impl_HttpClientChain implements ehough_shortstop_api_Http
      * Execute a given HTTP request.
      *
      * @param ehough_shortstop_api_HttpRequest         $request The HTTP request.
-     * @param ehough_shortshop_api_HttpResponseHandler $handler The HTTP response handler.
+     * @param ehough_shortstop_api_HttpResponseHandler $handler The HTTP response handler.
      *
      * @throws ehough_shortstop_api_exception_RuntimeException If something goes wrong.
      *
@@ -115,7 +115,7 @@ class ehough_shortstop_impl_HttpClientChain implements ehough_shortstop_api_Http
      */
     function executeAndHandleResponse(
         ehough_shortstop_api_HttpRequest $request,
-        ehough_shortshop_api_HttpResponseHandler $handler
+        ehough_shortstop_api_HttpResponseHandler $handler
     )
     {
         $response = $this->execute($request);
@@ -187,7 +187,7 @@ class ehough_shortstop_impl_HttpClientChain implements ehough_shortstop_api_Http
 
         if ($content !== null && $contentLength !== null && $type !== null) {
 
-            $request->setHeader(ehough_shortstop_api_HttpMessage::HTTP_HEADER_CONTENT_LENGTH, $contentLength);
+            $request->setHeader(ehough_shortstop_api_HttpMessage::HTTP_HEADER_CONTENT_LENGTH, "$contentLength");
             $request->setHeader(ehough_shortstop_api_HttpMessage::HTTP_HEADER_CONTENT_TYPE, $type);
 
             return;

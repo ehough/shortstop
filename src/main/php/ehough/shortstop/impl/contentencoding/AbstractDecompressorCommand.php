@@ -144,7 +144,7 @@ abstract class ehough_shortstop_impl_contentencoding_AbstractDecompressorCommand
             $ratio = number_format(($after / $before) * 100, 2);
         }
 
-        $logger->debug(sprintf('Successfully decoded entity with %s. Result is %s' . '%% of the original size (%s / %s).',
-            $this->logPrefix(), $ratio, $after, $before));
+        $logger->debug(sprintf('Successfully decoded entity. Result is %s' . '%% of the original size (%s / %s).',
+            $ratio, $after, $before));
     }
 }

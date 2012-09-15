@@ -29,7 +29,7 @@
  * 'allow_url_fopen' to be enabled.
  *
  */
-class org_tubepress_impl_http_transports_FopenTransport extends ehough_shortstop_impl_transports_AbstractHttpTransport
+class ehough_shortstop_impl_transports_FopenTransport extends ehough_shortstop_impl_transports_AbstractHttpTransport
 {
     private static $_fopen_readonly = 'r';
 

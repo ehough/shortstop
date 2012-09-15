@@ -22,7 +22,7 @@
 /**
  * Handles HTTP responses.
  */
-class ehough_shortstop_impl_HttpResponseHandlerChain implements ehough_shortshop_api_HttpResponseHandler
+class ehough_shortstop_impl_HttpResponseHandlerChain implements ehough_shortstop_api_HttpResponseHandler
 {
     /**
      * Error message chain key.

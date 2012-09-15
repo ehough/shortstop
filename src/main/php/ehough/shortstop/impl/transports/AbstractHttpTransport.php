@@ -83,7 +83,7 @@ abstract class ehough_shortstop_impl_transports_AbstractHttpTransport
 
         } catch (Exception $e) {
 
-            $logger->error('Caught exception when handling %s (%s). Will re-throw after tear down.', $request, $e->getMessage());
+            $logger->error(sprintf('Caught exception when handling %s (%s). Will re-throw after tear down.', $request, $e->getMessage()));
             $this->tearDown();
             throw new ehough_shortstop_api_exception_RuntimeException($e->getMessage());
         }

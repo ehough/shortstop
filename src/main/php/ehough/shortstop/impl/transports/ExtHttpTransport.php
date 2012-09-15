@@ -29,7 +29,7 @@
  * is being used, it doesn't mean that the HTTP extension will be enabled.
  *
  */
-class ehough_shortstop_impl_http_transports_ExtHttpTransport extends ehough_shortstop_impl_transports_AbstractHttpTransport
+class ehough_shortstop_impl_transports_ExtHttpTransport extends ehough_shortstop_impl_transports_AbstractHttpTransport
 {
     private static $_option_timeout        = 'timeout';
     private static $_option_connecttimeout = 'connecttimeout';

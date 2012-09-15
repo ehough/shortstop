@@ -20,7 +20,7 @@
         "php": ">=5.1.0",
         "ehough/chaingang": "*",
         "ehough/curly": "*",
-	"ehough/epilog": "*"
+	    "ehough/epilog": "*"
     },
 
     "require-dev": {

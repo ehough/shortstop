@@ -18,18 +18,20 @@
  * along with shortstop.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
-/**
- * Handles HTTP responses.
- */
-interface ehough_shortstop_api_HttpResponseHandler
+class ehough_shortstop_impl_contentencoding_NativeDeflateRfc1950DecompressorTest extends ehough_shortstop_impl_contentencoding_AbstractDecompressorTest
 {
-    /**
-     * Handles an HTTP response.
-     *
-     * @param ehough_shortstop_api_HttpResponse $response The HTTP response.
-     *
-     * @return string The raw entity body of the response. May be empty or null.
-     */
-    function handle(ehough_shortstop_api_HttpResponse $response);
+    protected function buildSut()
+    {
+        return new ehough_shortstop_impl_contentencoding_NativeDeflateRfc1950Decompressor();
+    }
+
+    protected function getHeaderValue()
+    {
+        return 'deflate';
+    }
+
+    protected function getCompressed($data, $level)
+    {
+        return gzcompress($data, $level);
+    }
 }

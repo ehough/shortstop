@@ -29,7 +29,7 @@
  *
  * Second preferred method for getting the URL, for PHP 5.
  */
-class ehough_shortstop_impl_http_transports_StreamsTransport extends ehough_shortstop_impl_transports_AbstractHttpTransport
+class ehough_shortstop_impl_transports_StreamsTransport extends ehough_shortstop_impl_transports_AbstractHttpTransport
 {
     private static $_stream_http_transport        = 'http';
     private static $_stream_metadata_timedout     = 'timed_out';

@@ -19,8 +19,6 @@
  *
  */
 
-require_once dirname(__FILE__) . '/AbstractHttpMessageTest.php';
-
 class ehough_shortstop_api_HttpResponseTest extends ehough_shortstop_api_AbstractHttpMessageTest
 {
     function buildSut()
