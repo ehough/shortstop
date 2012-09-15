@@ -45,7 +45,8 @@ class ehough_shortstop_api_HttpResponse extends ehough_shortstop_api_HttpMessage
      *
      * @param int $code The HTTP status code.
      *
-     * @throws InvalidArgumentException If the given code is not an integer between 100 and 599.
+     * @throws ehough_shortstop_api_exception_InvalidArgumentException
+     *          If the given code is not an integer between 100 and 599.
      *
      * @return void
      */
@@ -53,14 +54,18 @@ class ehough_shortstop_api_HttpResponse extends ehough_shortstop_api_HttpMessage
     {
         if (! is_numeric($code)) {
 
-            throw new InvalidArgumentException('Status code must be an integer (' . $code . ')');
+            throw new ehough_shortstop_api_exception_InvalidArgumentException(
+                'Status code must be an integer (' . $code . ')'
+            );
         }
 
         $code = intval($code);
 
         if ($code < 100 || $code > 599) {
 
-            throw new InvalidArgumentException('Status code must be in the range of 100 - 599');
+            throw new ehough_shortstop_api_exception_InvalidArgumentException(
+                'Status code must be in the range of 100 - 599'
+            );
         }
 
         $this->_statusCode = $code;

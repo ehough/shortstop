@@ -18,8 +18,9 @@
     "require": {
 
         "php": ">=5.1.0",
-        "ehough/chaingang": "1.*",
-        "ehough/curly": "1.*"
+        "ehough/chaingang": "*",
+        "ehough/curly": "*",
+	"ehough/epilog": "*"
     },
 
     "require-dev": {

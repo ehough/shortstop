@@ -36,7 +36,7 @@ abstract class ehough_shortstop_api_AbstractHttpMessageTest extends PHPUnit_Fram
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
     function testGetHeaderBadName()
     {
@@ -44,7 +44,7 @@ abstract class ehough_shortstop_api_AbstractHttpMessageTest extends PHPUnit_Fram
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
     function testSetHeaderBadValue()
     {
@@ -52,7 +52,7 @@ abstract class ehough_shortstop_api_AbstractHttpMessageTest extends PHPUnit_Fram
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
     function testSetHeaderBadName()
     {

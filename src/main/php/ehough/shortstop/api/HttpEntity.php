@@ -68,7 +68,8 @@ class ehough_shortstop_api_HttpEntity
      *
      * @param int $length The Content-Length.
      *
-     * @throws InvalidArgumentException If the supplied length is not a non-negative integer.
+     * @throws ehough_shortstop_api_exception_InvalidArgumentException
+     *           If the supplied length is not a non-negative integer.
      *
      * @return void
      */
@@ -76,14 +77,16 @@ class ehough_shortstop_api_HttpEntity
     {
         if (! is_numeric($length)) {
 
-            throw new InvalidArgumentException("Content-Length must be an integer ($length)");
+            throw new
+                ehough_shortstop_api_exception_InvalidArgumentException("Content-Length must be an integer ($length)");
         }
 
         $length = intval($length);
 
         if ($length < 0) {
 
-            throw new InvalidArgumentException("Content-Length cannot be negative ($length)");
+            throw new
+                ehough_shortstop_api_exception_InvalidArgumentException("Content-Length cannot be negative ($length)");
         }
 
         $this->_contentLength = $length;
@@ -104,7 +107,7 @@ class ehough_shortstop_api_HttpEntity
      *
      * @param string $type The Contenty-Type of this entity.
      *
-     * @throws InvalidArgumentException If the given type is not a string.
+     * @throws ehough_shortstop_api_exception_InvalidArgumentException If the given type is not a string.
      *
      * @return void
      */
@@ -112,7 +115,7 @@ class ehough_shortstop_api_HttpEntity
     {
         if (! is_string($type)) {
 
-            throw new InvalidArgumentException("Content-Type must be a string ($type)");
+            throw new ehough_shortstop_api_exception_InvalidArgumentException("Content-Type must be a string ($type)");
         }
 
         $this->_contentType = $type;

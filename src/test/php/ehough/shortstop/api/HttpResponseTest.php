@@ -39,7 +39,7 @@ class ehough_shortstop_api_HttpResponseTest extends ehough_shortstop_api_Abstrac
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
     function testSetStatusCodeTooHigh()
     {
@@ -47,7 +47,7 @@ class ehough_shortstop_api_HttpResponseTest extends ehough_shortstop_api_Abstrac
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
     function testSetStatusCodeTooLow()
     {
@@ -55,7 +55,7 @@ class ehough_shortstop_api_HttpResponseTest extends ehough_shortstop_api_Abstrac
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
     function testSetResponseCodeNonNumeric()
     {

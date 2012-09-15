@@ -31,6 +31,9 @@ abstract class ehough_shortstop_api_HttpMessage
 
     private $_headers = array();
 
+    /**
+     * @var ehough_shortstop_api_HttpEntity
+     */
     private $_entity;
 
     /**
@@ -141,7 +144,7 @@ abstract class ehough_shortstop_api_HttpMessage
      *
      * @param mixed $candidate The argument to check.
      *
-     * @throws InvalidArgumentException If the argument is not a string.
+     * @throws ehough_shortstop_api_exception_InvalidArgumentException If the argument is not a string.
      *
      * @return void
      */
@@ -149,7 +152,10 @@ abstract class ehough_shortstop_api_HttpMessage
     {
         if ($candidate != '' && ! is_string($candidate)) {
 
-            throw new InvalidArgumentException("All HTTP headers must be strings ($candidate)");
+            throw new
+                ehough_shortstop_api_exception_InvalidArgumentException(
+                    "All HTTP headers must be strings ($candidate)"
+                );
         }
     }
 }

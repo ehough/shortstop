@@ -62,7 +62,8 @@ class ehough_shortstop_api_HttpRequest extends ehough_shortstop_api_HttpMessage
      *
      * @param string $method The HTTP method.
      *
-     * @throws InvalidArgumentException If the method is not a string matching GET, PUT, POST, or DELETE.
+     * @throws ehough_shortstop_api_exception_InvalidArgumentException
+     *              If the method is not a string matching GET, PUT, POST, or DELETE.
      *
      * @return void
      */
@@ -70,7 +71,9 @@ class ehough_shortstop_api_HttpRequest extends ehough_shortstop_api_HttpMessage
     {
         if (preg_match('/get|post|put|delete/i', $method, $matches) !== 1) {
 
-            throw new InvalidArgumentException('Method must be PUT, GET, POST, or DELETE');
+            throw new ehough_shortstop_api_exception_InvalidArgumentException(
+                'Method must be PUT, GET, POST, or DELETE'
+            );
         }
 
         $this->_method = strtoupper($method);
@@ -91,8 +94,8 @@ class ehough_shortstop_api_HttpRequest extends ehough_shortstop_api_HttpMessage
      *
      * @param mixed $url The URL of this request.
      *
-     * @throws InvalidArgumentException If the given URL is not a valid string URL
-     *                                  or instance of org_tubepress_api_url_Url
+     * @throws ehough_shortstop_api_exception_InvalidArgumentException If the given URL is not a valid string URL
+     *                                  or instance of ehough_curly_Url
      *
      * @return void
      */
@@ -107,7 +110,9 @@ class ehough_shortstop_api_HttpRequest extends ehough_shortstop_api_HttpMessage
 
         if (! $url instanceof ehough_curly_Url) {
 
-            throw new InvalidArgumentException('setUrl() only takes a string or a ehough_curly_Url instance');
+            throw new ehough_shortstop_api_exception_InvalidArgumentException(
+                'setUrl() only takes a string or a ehough_curly_Url instance'
+            );
         }
 
         $this->_url = $url;

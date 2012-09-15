@@ -35,7 +35,7 @@ class ehough_shortstop_api_HttpEntityTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
     function testSetNonStringContentType()
     {
@@ -43,7 +43,7 @@ class ehough_shortstop_api_HttpEntityTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
     function testSetNegativeContentLength()
     {
@@ -51,7 +51,7 @@ class ehough_shortstop_api_HttpEntityTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
     function testSetBadContentLength()
     {

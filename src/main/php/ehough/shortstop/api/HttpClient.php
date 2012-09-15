@@ -27,23 +27,26 @@ interface ehough_shortstop_api_HttpClient
     /**
      * Execute a given HTTP request.
      *
-     * @param org_tubepress_api_http_HttpRequest $request The HTTP request.
+     * @param ehough_shortstop_api_HttpRequest $request The HTTP request.
      *
-     * @throws Exception If something goes wrong.
+     * @throws ehough_shortstop_api_exception_RuntimeException If something goes wrong.
      *
-     * @return org_tubepress_api_http_HttpResponse The HTTP response.
+     * @return ehough_shortstop_api_HttpResponse The HTTP response.
      */
-    function execute(org_tubepress_api_http_HttpRequest $request);
+    function execute(ehough_shortstop_api_HttpRequest $request);
 
     /**
      * Execute a given HTTP request.
      *
-     * @param org_tubepress_api_http_HttpRequest         $request The HTTP request.
-     * @param org_tubepress_api_http_HttpResponseHandler $handler The HTTP response handler.
+     * @param ehough_shortstop_api_HttpRequest         $request The HTTP request.
+     * @param ehough_shortshop_api_HttpResponseHandler $handler The HTTP response handler.
      *
-     * @throws Exception If something goes wrong.
+     * @throws ehough_shortstop_api_exception_RuntimeException If something goes wrong.
      *
      * @return string The raw entity data in the response. May be empty or null.
      */
-    function executeAndHandleResponse(org_tubepress_api_http_HttpRequest $request, org_tubepress_api_http_HttpResponseHandler $handler);
+    function executeAndHandleResponse(
+        ehough_shortstop_api_HttpRequest $request,
+        ehough_shortshop_api_HttpResponseHandler $handler
+    );
 }

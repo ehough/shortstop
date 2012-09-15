@@ -53,7 +53,7 @@ class ehough_shortstop_api_HttpRequestTest extends ehough_shortstop_api_Abstract
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
     function testSetUrlBadArg()
     {
@@ -76,7 +76,7 @@ class ehough_shortstop_api_HttpRequestTest extends ehough_shortstop_api_Abstract
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
     function testSetBadMethod()
     {
