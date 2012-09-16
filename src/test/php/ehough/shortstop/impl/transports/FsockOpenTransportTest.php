@@ -26,4 +26,9 @@ class ehough_shortstop_impl_transports_FsockOpenTransportTest extends ehough_sho
     {
         return new ehough_shortstop_impl_transports_FsockOpenTransport($mp);
     }
+
+    protected function _isAvailable()
+    {
+        return true;
+    }
 }

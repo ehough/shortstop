@@ -26,4 +26,9 @@ class ehough_shortstop_impl_transports_FopenTransportTest extends ehough_shortst
     {
         return new ehough_shortstop_impl_transports_FopenTransport($mp);
     }
+
+    protected function _isAvailable()
+    {
+        return function_exists('fopen') && function_exists('ini_get') && ini_get('allow_url_fopen') == true;
+    }
 }

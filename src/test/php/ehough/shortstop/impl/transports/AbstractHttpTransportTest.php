@@ -68,11 +68,23 @@ abstract class ehough_shortstop_impl_transports_AbstractHttpTransportTest extend
 
     function testGet200Plain()
     {
+        if (! $this->_isAvailable()) {
+
+            $this->assertTrue(true);
+            return;
+        }
+
         $this->_getTest('code-200-plain.php', 34, 'text/html', 200, $this->_contents200Plain());
     }
 
     function testGet404()
     {
+        if (! $this->_isAvailable()) {
+
+            $this->assertTrue(true);
+            return;
+        }
+
         try {
 
             $this->_getTest('code-404.php', 0, 'text/html', 404, null);
@@ -135,6 +147,8 @@ abstract class ehough_shortstop_impl_transports_AbstractHttpTransportTest extend
     }
 
     protected abstract function _getSutInstance(ehough_shortstop_spi_HttpMessageParser $mp);
+
+    protected abstract function _isAvailable();
 
     protected function prepareForRequest()
     {

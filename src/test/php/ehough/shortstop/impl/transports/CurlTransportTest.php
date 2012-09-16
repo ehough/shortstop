@@ -25,4 +25,9 @@ class ehough_shortstop_impl_transports_CurlTransportTest extends ehough_shortsto
     {
         return new ehough_shortstop_impl_transports_CurlTransport($mp);
     }
+
+    protected function _isAvailable()
+    {
+        return function_exists('curl_init');
+    }
 }
