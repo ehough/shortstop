@@ -28,8 +28,6 @@ abstract class ehough_shortstop_impl_transports_AbstractHttpTransportTest extend
 
     function setUp()
     {
-        parent::setUp();
-
         $this->_mockHttpMessageParser = Mockery::mock('ehough_shortstop_spi_HttpMessageParser');
         $this->_sut                   = $this->_getSutInstance($this->_mockHttpMessageParser);
         $this->_server                = 'http://tubepress.org/http_tests';
@@ -68,6 +66,14 @@ abstract class ehough_shortstop_impl_transports_AbstractHttpTransportTest extend
 
     function testGet200Plain()
     {
+
+        $this->_testGet200Plain();
+        $this->_testGet200Plain();
+    }
+
+    private function _testGet200Plain()
+    {
+
         if (! $this->_isAvailable()) {
 
             $this->assertTrue(true);
@@ -78,6 +84,13 @@ abstract class ehough_shortstop_impl_transports_AbstractHttpTransportTest extend
     }
 
     function testGet404()
+    {
+
+        $this->_testGet404();
+        $this->_testGet404();
+    }
+
+    private function _testGet404()
     {
         if (! $this->_isAvailable()) {
 

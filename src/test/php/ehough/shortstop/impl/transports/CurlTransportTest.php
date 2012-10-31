@@ -19,8 +19,8 @@
  *
  */
 
-class ehough_shortstop_impl_transports_CurlTransportTest extends ehough_shortstop_impl_transports_AbstractHttpTransportTest {
-
+class ehough_shortstop_impl_transports_CurlTransportTest extends ehough_shortstop_impl_transports_AbstractHttpTransportTest
+{
     protected function _getSutInstance(ehough_shortstop_spi_HttpMessageParser $mp)
     {
         return new ehough_shortstop_impl_transports_CurlTransport($mp);

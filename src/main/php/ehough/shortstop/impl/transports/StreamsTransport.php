@@ -193,7 +193,6 @@ class ehough_shortstop_impl_transports_StreamsTransport extends ehough_shortstop
     {
         unset($this->_streamContext);
         unset($this->_streamResultMeta);
-        unset($this->_httpMessageParser);
     }
 
     /**
