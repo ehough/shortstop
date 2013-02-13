@@ -189,7 +189,7 @@ class ehough_shortstop_impl_transports_CurlTransport extends ehough_shortstop_im
             CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_0,
             CURLOPT_MAXREDIRS      => 5,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYHOST => true,
+            CURLOPT_SSL_VERIFYHOST => 2,
             CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_TIMEOUT        => 5,
             CURLOPT_URL            => $request->getUrl()->toString(),
