@@ -96,7 +96,7 @@ class ehough_shortstop_impl_transports_CurlTransport extends ehough_shortstop_im
             $this->_logger->debug('Initializing cURL');
         }
 
-        $this->_handle = curl_init();
+        $this->_handle = curl_init($request->getUrl()->toString());
         $this->_setCurlOptions($request);
 
         if ($this->_logger->isDebugEnabled()) {

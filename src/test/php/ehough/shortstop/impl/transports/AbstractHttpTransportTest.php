@@ -131,7 +131,7 @@ abstract class ehough_shortstop_impl_transports_AbstractHttpTransportTest extend
         $this->assertTrue($response instanceof ehough_shortstop_api_HttpResponse, 'Reponse is not of type HttpResponse');
 
         $actualContentType = $response->getHeaderValue(ehough_shortstop_api_HttpMessage::HTTP_HEADER_CONTENT_TYPE);
-        $this->assertTrue($actualContentType === $type || $actualContentType === "$type; charset=utf-8", "Expected Content-Type $type but got $actualContentType");
+        $this->assertTrue($actualContentType === $type || $actualContentType === "$type; charset=utf-8" || $actualContentType === "$type; charset=UTF-8", "Expected Content-Type $type but got $actualContentType");
 
         $encoded = $response->getHeaderValue(ehough_shortstop_api_HttpMessage::HTTP_HEADER_CONTENT_ENCODING);
         $this->assertEquals($encoding, $encoded, "Expected encoding $encoding but got $encoded");
@@ -172,7 +172,6 @@ abstract class ehough_shortstop_impl_transports_AbstractHttpTransportTest extend
     {
         return <<<EOT
 random stuff!
-
 here's another line
 
 EOT;
