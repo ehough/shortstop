@@ -1,12 +1,8 @@
 {
     "name": "ehough/shortstop",
-
-    "description": "Fast and flexible HTTP client for PHP 5.1 and above",
-
+    "description": "Fast and flexible HTTP client for PHP 5.1.3 and above",
     "homepage": "https://github.com/ehough/shortstop",
-
-    "license": "GPL-3.0+",
-
+    "license": "MPL-2.0",
     "authors": [
         {
             "name": "Eric Hough",
@@ -14,27 +10,20 @@
             "homepage": "http://ehough.com"
         }
     ],
-
     "require": {
-
-        "php": ">=5.1.0",
+        "php": ">=5.1.3",
         "ehough/chaingang": "*",
         "ehough/curly": "*",
 	    "ehough/epilog": "*"
     },
-
     "require-dev": {
         
 	    "ehough/pulsar": "1.*",
         "mockery/mockery": ">=0.7.2"
     },
-
     "autoload": {
-
         "psr-0": {
-
             "ehough_shortstop": "src/main/php"
         }
     }
-
 }
