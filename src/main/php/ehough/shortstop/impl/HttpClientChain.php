@@ -68,7 +68,6 @@ class ehough_shortstop_impl_HttpClientChain implements ehough_shortstop_api_Http
      */
     public final function execute(ehough_shortstop_api_HttpRequest $request)
     {
-        self::_checkRequest($request);
         $this->_setDefaultHeaders($request);
 
         if ($this->_logger->isDebugEnabled()) {
@@ -130,26 +129,6 @@ class ehough_shortstop_impl_HttpClientChain implements ehough_shortstop_api_Http
 
             $this->_logger->debug(sprintf('The raw result for %s is in the HTML source for this page <span style="display:none">%s</span>',
                 $request, htmlspecialchars(var_export($response, true))));
-        }
-    }
-
-    /**
-     * Check that the request has everything set for execution.
-     *
-     * @param ehough_shortstop_api_HttpRequest $request The request to check.
-     *
-     * @throws ehough_shortstop_api_exception_LogicException If the request is not ready.
-     */
-    private static function _checkRequest(ehough_shortstop_api_HttpRequest $request)
-    {
-        if ($request->getMethod() === null) {
-
-            throw new ehough_shortstop_api_exception_LogicException('Request has no method set');
-        }
-
-        if ($request->getUrl() === null) {
-
-            throw new ehough_shortstop_api_exception_LogicException('Request has no URL set');
         }
     }
 
