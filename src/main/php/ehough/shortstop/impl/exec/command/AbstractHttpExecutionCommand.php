@@ -22,9 +22,16 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
      */
     private $_httpMessageParser;
 
-    public function __construct(ehough_shortstop_spi_HttpMessageParser $httpMessageParser)
+    /**
+     * @var ehough_tickertape_EventDispatcherInterface
+     */
+    private $_eventDispatcher;
+
+    public function __construct(ehough_shortstop_spi_HttpMessageParser $httpMessageParser,
+        ehough_tickertape_EventDispatcherInterface $eventDispatcher)
     {
         $this->_httpMessageParser = $httpMessageParser;
+        $this->_eventDispatcher   = $eventDispatcher;
     }
 
     /**
@@ -64,6 +71,24 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
             return false;
         }
 
+        $okToUseTransportEvent = new ehough_tickertape_GenericEvent($this, array(
+
+                'ok'      => true,
+                'request' => $request
+            )
+        );
+        $this->_eventDispatcher->dispatch(ehough_shortstop_api_Events::TRANSPORT_SELECTED, $okToUseTransportEvent);
+
+        if (! $okToUseTransportEvent->getArgument('ok')) {
+
+            if ($isDebugEnabled) {
+
+                $logger->debug(sprintf('Event listeners turned down offer to handle %s', $request));
+            }
+
+            return false;
+        }
+
         if ($isDebugEnabled) {
 
             $logger->debug(sprintf('Offered to handle %s. Now initializing.', $request));
@@ -73,12 +98,20 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
 
             $context->put('response', $this->handle($request));
 
+            $transportSuccessEvent = new ehough_tickertape_GenericEvent($this,
+                array('request' => $request, 'response' => $context->get('response')));
+            $this->_eventDispatcher->dispatch(ehough_shortstop_api_Events::TRANSPORT_SUCCESS, $transportSuccessEvent);
+
             return true;
 
         } catch (Exception $e) {
 
+            $transportFailureEvent = new ehough_tickertape_GenericEvent($this,
+                array('request' => $request, 'response' => $context->get('response'), 'exception' => $e));
+            $this->_eventDispatcher->dispatch(ehough_shortstop_api_Events::TRANSPORT_FAILURE, $transportFailureEvent);
+
             $logger->error(sprintf('Caught exception when handling %s (%s). Will re-throw after tear down.', $request, $e->getMessage()));
-            $this->tearDown();
+            $this->_tearDown($request);
             throw new ehough_shortstop_api_exception_RuntimeException($e->getMessage());
         }
     }
@@ -103,6 +136,12 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
         /** allow for setup */
         $this->prepareToHandleNewRequest($request);
 
+        /**
+         * Fire transport initialized event.
+         */
+        $transportInitializedEvent = new ehough_tickertape_GenericEvent($this, array('request' => $request));
+        $this->_eventDispatcher->dispatch(ehough_shortstop_api_Events::TRANSPORT_INITIALIZED, $transportInitializedEvent);
+
         if ($isDebugEnabled) {
 
             $logger->debug(sprintf('Now handling %s', $request));
@@ -123,7 +162,7 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
             $logger->debug(sprintf('Tearing down after %s', $request));
         }
 
-        $this->tearDown();
+        $this->_tearDown($request);
 
         if ($isDebugEnabled) {
 
@@ -131,6 +170,17 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
         }
 
         return $response;
+    }
+
+    private function _tearDown(ehough_shortstop_api_HttpRequest $request)
+    {
+        $this->tearDown();
+
+        /**
+         * Fire torn down event.
+         */
+        $transportTornDownEvent = new ehough_tickertape_GenericEvent($this, array('request' => $request));
+        $this->_eventDispatcher->dispatch(ehough_shortstop_api_Events::TRANSPORT_TORNDOWN, $transportTornDownEvent);
     }
 
     /**

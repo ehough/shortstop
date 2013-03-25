@@ -47,9 +47,9 @@ class ehough_shortstop_impl_exec_command_StreamsCommand extends ehough_shortstop
     /** @var ehough_epilog_Logger */
     private $_logger;
 
-    public function __construct(ehough_shortstop_spi_HttpMessageParser $messageParser)
+    public function __construct(ehough_shortstop_spi_HttpMessageParser $messageParser, ehough_tickertape_EventDispatcherInterface $eventDispatcher)
     {
-        parent::__construct($messageParser);
+        parent::__construct($messageParser, $eventDispatcher);
 
         $this->_httpMessageParser = $messageParser;
         $this->_logger            = ehough_epilog_LoggerFactory::getLogger('Streams Transport');

@@ -16,11 +16,65 @@ class ehough_shortstop_api_Events
 {
     /**
      * Fired immediately before a request is executed.
+     *
+     * @subject ehough_shortstop_api_HttpRequest
      */
     const REQUEST = 'ehough.shortstop.request';
 
     /**
      * Fired when a response is returned.
+     *
+     * @subject ehough_shortstop_api_HttpResponse
+     *
+     * @arg request ehough_shortstop_api_HttpRequest
      */
     const RESPONSE = 'ehough.shortstop.response';
+
+    /**
+     * Fired when
+     *
+     * @subject ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
+     *
+     * @arg ok      boolean
+     * @arg request ehough_shortstop_api_HttpRequest
+     */
+    const TRANSPORT_SELECTED = 'ehough.shortstop.exec.transport.selected';
+
+    /**
+     * Fired when
+     *
+     * @subject ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
+     *
+     * @arg request ehough_shortstop_api_HttpRequest
+     */
+    const TRANSPORT_INITIALIZED = 'ehough.shortstop.exec.transport.initialized';
+
+    /**
+     * Fired when
+     *
+     * @subject ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
+     *
+     * @arg request  ehough_shortstop_api_HttpRequest
+     * @arg response ehough_shortstop_api_HttpResponse
+     */
+    const TRANSPORT_SUCCESS = 'ehough.shortstop.exec.transport.success';
+
+    /**
+     * Fired when
+     *
+     * @subject ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
+     *
+     * @arg request  ehough_shortstop_api_HttpRequest
+     * @arg response ehough_shortstop_api_HttpResponse
+     */
+    const TRANSPORT_FAILURE = 'ehough.shortstop.exec.transport.failure';
+
+    /**
+     * Fired when
+     *
+     * @subject ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
+     *
+     * @arg request ehough_shortstop_api_HttpRequest
+     */
+    const TRANSPORT_TORNDOWN = 'ehough.shortstop.exec.transport.torndown';
 }

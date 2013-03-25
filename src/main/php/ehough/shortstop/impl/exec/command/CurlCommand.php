@@ -23,9 +23,9 @@ class ehough_shortstop_impl_exec_command_CurlCommand extends ehough_shortstop_im
 
     private $_handle;
 
-    public function __construct(ehough_shortstop_spi_HttpMessageParser $messageParser)
+    public function __construct(ehough_shortstop_spi_HttpMessageParser $messageParser, ehough_tickertape_EventDispatcherInterface $eventDispatcher)
     {
-        parent::__construct($messageParser);
+        parent::__construct($messageParser, $eventDispatcher);
 
         $this->_logger = ehough_epilog_LoggerFactory::getLogger('cURL Transport');
     }

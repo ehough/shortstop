@@ -12,9 +12,9 @@
 class ehough_shortstop_impl_exec_command_FopenCommandTest extends ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommandTest
 {
 
-    protected function _getSutInstance(ehough_shortstop_spi_HttpMessageParser $mp)
+    protected function _getSutInstance(ehough_shortstop_spi_HttpMessageParser $mp, ehough_tickertape_EventDispatcherInterface $ed)
     {
-        return new ehough_shortstop_impl_exec_command_FopenCommand($mp);
+        return new ehough_shortstop_impl_exec_command_FopenCommand($mp, $ed);
     }
 
     protected function _isAvailable()

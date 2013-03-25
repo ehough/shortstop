@@ -15,11 +15,13 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommandTe
     private $_args;
     private $_server;
     private $_mockHttpMessageParser;
+    private $_mockEventDispatcher;
 
     function setUp()
     {
         $this->_mockHttpMessageParser = Mockery::mock('ehough_shortstop_spi_HttpMessageParser');
-        $this->_sut                   = $this->_getSutInstance($this->_mockHttpMessageParser);
+        $this->_mockEventDispatcher   = Mockery::mock('ehough_tickertape_EventDispatcherInterface');
+        $this->_sut                   = $this->_getSutInstance($this->_mockHttpMessageParser, $this->_mockEventDispatcher);
         $this->_server                = 'http://tubepress.org/http_tests';
 
         $this->_mockHttpMessageParser->shouldReceive('getHeadersStringFromRawHttpMessage')->andReturnUsing(function ($data) {
@@ -56,14 +58,12 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommandTe
 
     function testGet200Plain()
     {
-
         $this->_testGet200Plain();
         $this->_testGet200Plain();
     }
 
     private function _testGet200Plain()
     {
-
         if (! $this->_isAvailable()) {
 
             $this->assertTrue(true);
@@ -112,6 +112,29 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommandTe
         $request->setHeader(ehough_shortstop_api_HttpRequest::HTTP_HEADER_USER_AGENT, 'TubePress');
         $context->put('request', $request);
 
+        $self = $this->_sut;
+
+        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::TRANSPORT_SELECTED, Mockery::on(function ($event) use ($self, $request) {
+
+            return $event instanceof ehough_tickertape_GenericEvent && $event->getSubject() === $self && $event->getArgument('request') === $request;
+        }));
+
+        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::TRANSPORT_INITIALIZED, Mockery::on(function ($event) use ($self, $request) {
+
+            return $event instanceof ehough_tickertape_GenericEvent && $event->getSubject() === $self && $event->getArgument('request') === $request;
+        }));
+
+        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::TRANSPORT_TORNDOWN, Mockery::on(function ($event) use ($self, $request) {
+
+            return $event instanceof ehough_tickertape_GenericEvent && $event->getSubject() === $self && $event->getArgument('request') === $request;
+        }));
+
+        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::TRANSPORT_SUCCESS, Mockery::on(function ($event) use ($self, $request) {
+
+            return $event instanceof ehough_tickertape_GenericEvent && $event->getSubject() === $self && $event->getArgument('request') === $request
+                && $event->getArgument('response') instanceof ehough_shortstop_api_HttpResponse;
+        }));
+
         $result = $this->_sut->execute($context);
 
         $this->assertTrue($result, "Command did not return true that it had handled request ($result)");
@@ -149,7 +172,7 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommandTe
         $this->assertEquals($expected, $data);
     }
 
-    protected abstract function _getSutInstance(ehough_shortstop_spi_HttpMessageParser $mp);
+    protected abstract function _getSutInstance(ehough_shortstop_spi_HttpMessageParser $mp, ehough_tickertape_EventDispatcherInterface $ed);
 
     protected abstract function _isAvailable();
 
