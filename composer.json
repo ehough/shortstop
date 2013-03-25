@@ -1,6 +1,6 @@
 {
     "name": "ehough/shortstop",
-    "description": "Fast and flexible HTTP client for PHP 5.1.3 and above",
+    "description": "Fast and flexible HTTP client for PHP 5.2+",
     "homepage": "https://github.com/ehough/shortstop",
     "license": "MPL-2.0",
     "authors": [
@@ -11,10 +11,11 @@
         }
     ],
     "require": {
-        "php": ">=5.1.3",
+        "php": ">=5.2",
         "ehough/chaingang": "*",
         "ehough/curly": "*",
-	    "ehough/epilog": "*"
+	    "ehough/epilog": "~2.0.0",
+        "ehough/tickertape": "~2.0.0"
     },
     "require-dev": {
         
