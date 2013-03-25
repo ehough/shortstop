@@ -9,12 +9,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-class ehough_shortstop_impl_exec_command_FopenTransportTest extends ehough_shortstop_impl_exec_command_AbstractHttpTransportTest
+class ehough_shortstop_impl_exec_command_StreamsCommandTest extends ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommandTest
 {
 
     protected function _getSutInstance(ehough_shortstop_spi_HttpMessageParser $mp)
     {
-        return new ehough_shortstop_impl_exec_command_FopenTransport($mp);
+        return new ehough_shortstop_impl_exec_command_StreamsCommand($mp);
     }
 
     protected function _isAvailable()

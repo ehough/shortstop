@@ -14,7 +14,7 @@
  */
 class ehough_shortstop_impl_DefaultHttpClient implements ehough_shortstop_api_HttpClientInterface
 {
-    /** @var ehough_epilog_psr_LoggerInterface */
+    /** @var ehough_epilog_Logger */
     private $_logger;
 
     /**

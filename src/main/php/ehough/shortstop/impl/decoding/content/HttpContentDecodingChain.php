@@ -12,7 +12,7 @@
 /**
  * Decodes Content-Encoded HTTP messages using chain-of-responsibility.
  */
-class ehough_shortstop_impl_decoding_content_HttpContentDecoderChain extends ehough_shortstop_impl_decoding_AbstractDecodingChain
+class ehough_shortstop_impl_decoding_content_HttpContentDecodingChain extends ehough_shortstop_impl_decoding_AbstractDecodingChain
     implements ehough_shortstop_spi_HttpContentDecoder
 {
     protected final function getHeaderName()

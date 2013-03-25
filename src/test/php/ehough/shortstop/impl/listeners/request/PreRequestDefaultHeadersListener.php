@@ -1,6 +1,0 @@
-<?php
-
-class ehough_shortstop_impl_listeners_request_PreRequestDefaultHeadersListenerTest extends PHPUnit_Framework_TestCase
-{
-
-}

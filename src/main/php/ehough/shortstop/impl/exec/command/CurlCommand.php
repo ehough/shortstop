@@ -16,7 +16,7 @@
  *
  * Requires the Curl extension to be installed.
  */
-class ehough_shortstop_impl_exec_command_CurlTransport extends ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
+class ehough_shortstop_impl_exec_command_CurlCommand extends ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
 {
     /** @var ehough_epilog_Logger */
     private $_logger;
@@ -110,7 +110,9 @@ class ehough_shortstop_impl_exec_command_CurlTransport extends ehough_shortstop_
      */
     protected function handleRequest(ehough_shortstop_api_HttpRequest $request)
     {
-        if ($this->_logger->isHandling(ehough_epilog_Logger::DEBUG)) {
+        $isDebugging = $this->_logger->isHandling(ehough_epilog_Logger::DEBUG);
+
+        if ($isDebugging) {
 
             $this->_logger->debug('Calling curl_exec()');
         }
@@ -127,7 +129,7 @@ class ehough_shortstop_impl_exec_command_CurlTransport extends ehough_shortstop_
             throw new ehough_shortstop_api_exception_RuntimeException('cURL failed');
         }
 
-        if ($this->_logger->isHandling(ehough_epilog_Logger::DEBUG)) {
+        if ($isDebugging) {
 
             $this->_logger->debug('cURL returned a valid response');
         }

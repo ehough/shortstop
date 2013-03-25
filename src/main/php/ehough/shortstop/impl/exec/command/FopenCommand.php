@@ -19,7 +19,7 @@
  * 'allow_url_fopen' to be enabled.
  *
  */
-class ehough_shortstop_impl_exec_command_FopenTransport extends ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
+class ehough_shortstop_impl_exec_command_FopenCommand extends ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
 {
     private static $_fopen_readonly = 'r';
 
@@ -28,7 +28,7 @@ class ehough_shortstop_impl_exec_command_FopenTransport extends ehough_shortstop
 
     private $_handle;
 
-    /** @var ehough_epilog_psr_LoggerInterface */
+    /** @var ehough_epilog_Logger */
     private $_logger;
 
     public function __construct(ehough_shortstop_spi_HttpMessageParser $messageParser)
@@ -49,7 +49,9 @@ class ehough_shortstop_impl_exec_command_FopenTransport extends ehough_shortstop
      */
     protected function handleRequest(ehough_shortstop_api_HttpRequest $request)
     {
-        if ($this->_logger->isHandling(ehough_epilog_Logger::DEBUG)) {
+        $isDebugging = $this->_logger->isHandling(ehough_epilog_Logger::DEBUG);
+
+        if ($isDebugging) {
 
             $this->_logger->debug('Calling fopen()...');
         }
@@ -61,7 +63,7 @@ class ehough_shortstop_impl_exec_command_FopenTransport extends ehough_shortstop
             throw new ehough_shortstop_api_exception_RuntimeException(sprintf('Could not open handle for fopen() to %s', $request->getUrl()));
         }
 
-        if ($this->_logger->isHandling(ehough_epilog_Logger::DEBUG)) {
+        if ($isDebugging) {
 
             $this->_logger->debug('Successfully opened stream');
         }
@@ -75,14 +77,14 @@ class ehough_shortstop_impl_exec_command_FopenTransport extends ehough_shortstop
             $rawContent .= fread($this->_handle, 4096);
         }
 
-        if ($this->_logger->isHandling(ehough_epilog_Logger::DEBUG)) {
+        if ($isDebugging) {
 
             $this->_logger->debug('Done reading stream');
         }
 
         if (function_exists('stream_get_meta_data')) {
 
-            if ($this->_logger->isHandling(ehough_epilog_Logger::DEBUG)) {
+            if ($isDebugging) {
 
                 $this->_logger->debug('Asking for stream metadata');
             }
@@ -98,7 +100,7 @@ class ehough_shortstop_impl_exec_command_FopenTransport extends ehough_shortstop
 
         } else {
 
-            if ($this->_logger->isHandling(ehough_epilog_Logger::DEBUG)) {
+            if ($isDebugging) {
 
                 $this->_logger->debug('stream_get_meta_data() does not exist');
             }
@@ -150,9 +152,11 @@ class ehough_shortstop_impl_exec_command_FopenTransport extends ehough_shortstop
      */
     public function isAvailable()
     {
+        $isDebugging = $this->_logger->isHandling(ehough_epilog_Logger::DEBUG);
+
         if (! function_exists('fopen')) {
 
-            if ($this->_logger->isHandling(ehough_epilog_Logger::DEBUG)) {
+            if ($isDebugging) {
 
                 $this->_logger->debug('fopen() does not exist');
             }
@@ -162,7 +166,7 @@ class ehough_shortstop_impl_exec_command_FopenTransport extends ehough_shortstop
 
         if (function_exists('ini_get') && ini_get('allow_url_fopen') != true) {
 
-            if ($this->_logger->isHandling(ehough_epilog_Logger::DEBUG)) {
+            if ($isDebugging) {
 
                 $this->_logger->debug('allow_url_fopen is set to false');
             }

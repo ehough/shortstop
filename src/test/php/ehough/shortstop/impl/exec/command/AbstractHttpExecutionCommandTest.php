@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-abstract class ehough_shortstop_impl_exec_command_AbstractHttpTransportTest extends PHPUnit_Framework_TestCase
+abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommandTest extends PHPUnit_Framework_TestCase
 {
     private $_sut;
     private $_args;
@@ -94,7 +94,7 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpTransportTest exte
 
         } catch (Exception $e) {
 
-            if (! $this->_sut instanceof ehough_shortstop_impl_exec_command_FopenTransport) {
+            if (! $this->_sut instanceof ehough_shortstop_impl_exec_command_FopenCommand) {
 
                 throw $e;
             }

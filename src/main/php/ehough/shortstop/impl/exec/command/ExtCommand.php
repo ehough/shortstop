@@ -19,7 +19,7 @@
  * is being used, it doesn't mean that the HTTP extension will be enabled.
  *
  */
-class ehough_shortstop_impl_exec_command_ExtHttpTransport extends ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
+class ehough_shortstop_impl_exec_command_ExtCommand extends ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
 {
     private static $_option_timeout        = 'timeout';
     private static $_option_connecttimeout = 'connecttimeout';
@@ -32,7 +32,7 @@ class ehough_shortstop_impl_exec_command_ExtHttpTransport extends ehough_shortst
 
     private $_info;
 
-    /** @var ehough_epilog_psr_LoggerInterface */
+    /** @var ehough_epilog_Logger */
     private $_logger;
 
     public function __construct(ehough_shortstop_spi_HttpMessageParser $messageParser)

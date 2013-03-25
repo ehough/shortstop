@@ -116,7 +116,7 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
             $logger->debug(sprintf('Assembling response from %s', $request));
         }
 
-        $response = $this->_buildResponse($rawResponse, $request);
+        $response = $this->_buildResponse($rawResponse, $request, $isDebugEnabled);
 
         if ($isDebugEnabled) {
 
@@ -183,7 +183,7 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
         //override point
     }
 
-    private function _buildResponse($rawResponse, ehough_shortstop_api_HttpRequest $request)
+    private function _buildResponse($rawResponse, ehough_shortstop_api_HttpRequest $request, $debugging)
     {
         /* first separate the headers from the body */
         $headersString = $this->_httpMessageParser->getHeadersStringFromRawHttpMessage($rawResponse);
@@ -202,18 +202,18 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
         /* create a new response. */
         $response = new ehough_shortstop_api_HttpResponse();
 
-        $this->_assignStatusToResponse($response, $request);
-        $this->_assignHeadersToResponse($headers, $response, $request);
-        $this->_assignEntityToResponse($bodyString, $response, $request);
+        $this->_assignStatusToResponse($response, $request, $debugging);
+        $this->_assignHeadersToResponse($headers, $response, $request, $debugging);
+        $this->_assignEntityToResponse($bodyString, $response, $debugging);
 
         return $response;
     }
 
-    private function _assignStatusToResponse(ehough_shortstop_api_HttpResponse $response, ehough_shortstop_api_HttpRequest $request)
+    private function _assignStatusToResponse(ehough_shortstop_api_HttpResponse $response, ehough_shortstop_api_HttpRequest $request, $debugging)
     {
         $code = $this->getResponseCode();
 
-        if ($this->getLogger()->isHandling(ehough_epilog_Logger::DEBUG)) {
+        if ($debugging) {
 
             $this->getLogger()->debug(sprintf('%s returned HTTP %s', $request, $code));
         }
@@ -221,11 +221,11 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
         $response->setStatusCode($code);
     }
 
-    private function _assignHeadersToResponse($headerArray, ehough_shortstop_api_HttpResponse $response, ehough_shortstop_api_HttpRequest $request)
+    private function _assignHeadersToResponse($headerArray, ehough_shortstop_api_HttpResponse $response, ehough_shortstop_api_HttpRequest $request, $debugging)
     {
         if (! is_array($headerArray) || empty($headerArray)) {
 
-            throw new Exception(sprintf('No headers in response from %s', $request));
+            throw new ehough_shortstop_api_exception_RuntimeException(sprintf('No headers in response from %s', $request));
         }
 
         foreach ($headerArray as $name => $value) {
@@ -241,7 +241,7 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
         $logger = $this->getLogger();
 
         /* do some logging */
-        if ($this->getLogger()->isHandling(ehough_epilog_Logger::DEBUG)) {
+        if ($debugging) {
 
             $headerArray = $response->getAllHeaders();
 
@@ -254,9 +254,9 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
         }
     }
 
-    private function _assignEntityToResponse($body, ehough_shortstop_api_HttpResponse $response, ehough_shortstop_api_HttpRequest $request)
+    private function _assignEntityToResponse($body, ehough_shortstop_api_HttpResponse $response, $debugging)
     {
-        if ($this->getLogger()->isHandling(ehough_epilog_Logger::DEBUG)) {
+        if ($debugging) {
 
             $this->getLogger()->debug('Assigning (possibly empty) entity to response');
         }

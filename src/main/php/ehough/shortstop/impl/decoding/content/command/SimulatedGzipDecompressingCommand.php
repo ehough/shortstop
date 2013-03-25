@@ -14,7 +14,9 @@
  */
 class ehough_shortstop_impl_decoding_content_command_SimulatedGzipDecompressingCommand extends ehough_shortstop_impl_decoding_content_command_AbstractContentDecompressingCommand
 {
-    /** @var ehough_epilog_Logger */
+    /**
+     * @var ehough_epilog_Logger
+     */
     private $_logger;
 
     /**

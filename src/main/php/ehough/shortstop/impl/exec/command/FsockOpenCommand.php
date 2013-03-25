@@ -18,13 +18,13 @@
  * the HTTP transport implementations.
  *
  */
-class ehough_shortstop_impl_exec_command_FsockOpenTransport extends ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
+class ehough_shortstop_impl_exec_command_FsockOpenCommand extends ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
 {
     private $_handle;
 
     private $_rawMessage;
 
-    /** @var ehough_epilog_psr_LoggerInterface */
+    /** @var ehough_epilog_Logger */
     private $_logger;
 
     public function __construct(ehough_shortstop_spi_HttpMessageParser $messageParser)
@@ -45,9 +45,10 @@ class ehough_shortstop_impl_exec_command_FsockOpenTransport extends ehough_short
      */
     protected function handleRequest(ehough_shortstop_api_HttpRequest $request)
     {
-        $url  = $request->getUrl();
-        $port = $url->getPort() === null ? 80 : $url->getPort();
-        $host = $url->getHost();
+        $url         = $request->getUrl();
+        $port        = $url->getPort() === null ? 80 : $url->getPort();
+        $host        = $url->getHost();
+        $isDebugging = $this->_logger->isHandling(ehough_epilog_Logger::DEBUG);
 
         //fsockopen has issues with 'localhost' with IPv6 with certain versions of PHP, It attempts to connect to ::1,
         // which fails when the server is not set up for it. For compatibility, always connect to the IPv4 address.
@@ -56,7 +57,7 @@ class ehough_shortstop_impl_exec_command_FsockOpenTransport extends ehough_short
             $fsockopen_host = '127.0.0.1';
         }
 
-        if ($this->_logger->isHandling(ehough_epilog_Logger::DEBUG)) {
+        if ($isDebugging) {
 
             $this->_logger->debug('Now calling fsockopen()...');
         }
@@ -68,7 +69,7 @@ class ehough_shortstop_impl_exec_command_FsockOpenTransport extends ehough_short
             throw new ehough_shortstop_api_exception_RuntimeException($iError . ': ' . $strError);
         }
 
-        if ($this->_logger->isHandling(ehough_epilog_Logger::DEBUG)) {
+        if ($isDebugging) {
 
             $this->_logger->debug('Successfully opened handle');
         }
@@ -77,7 +78,7 @@ class ehough_shortstop_impl_exec_command_FsockOpenTransport extends ehough_short
 
         stream_set_timeout($this->_handle, 5);
 
-        if ($this->_logger->isHandling(ehough_epilog_Logger::DEBUG)) {
+        if ($isDebugging) {
 
             $this->_logger->debug('Reading response...');
         }
@@ -88,7 +89,7 @@ class ehough_shortstop_impl_exec_command_FsockOpenTransport extends ehough_short
             $rawResponse .= fread($this->_handle, 4096);
         }
 
-        if ($this->_logger->isHandling(ehough_epilog_Logger::DEBUG)) {
+        if ($isDebugging) {
 
             $this->_logger->debug('Done reading response');
         }

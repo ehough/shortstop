@@ -9,15 +9,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-class ehough_shortstop_impl_exec_command_CurlTransportTest extends ehough_shortstop_impl_exec_command_AbstractHttpTransportTest
+class ehough_shortstop_impl_exec_command_ExtCommandTest extends ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommandTest
 {
+
     protected function _getSutInstance(ehough_shortstop_spi_HttpMessageParser $mp)
     {
-        return new ehough_shortstop_impl_exec_command_CurlTransport($mp);
+        return new ehough_shortstop_impl_exec_command_ExtCommand($mp);
     }
 
     protected function _isAvailable()
     {
-        return function_exists('curl_init');
+        return function_exists('http_request');
     }
 }

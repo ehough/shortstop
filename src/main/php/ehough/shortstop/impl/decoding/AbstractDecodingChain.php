@@ -17,7 +17,7 @@ abstract class ehough_shortstop_impl_decoding_AbstractDecodingChain implements e
     /** @var ehough_chaingang_api_Chain */
     private $_chain;
 
-    /** @var ehough_epilog_psr_LoggerInterface */
+    /** @var ehough_epilog_Logger */
     private $_logger;
 
     public function __construct(ehough_chaingang_api_Chain $chain)

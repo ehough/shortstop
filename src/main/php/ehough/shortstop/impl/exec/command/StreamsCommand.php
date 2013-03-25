@@ -19,7 +19,7 @@
  *
  * Second preferred method for getting the URL, for PHP 5.
  */
-class ehough_shortstop_impl_exec_command_StreamsTransport extends ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
+class ehough_shortstop_impl_exec_command_StreamsCommand extends ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
 {
     private static $_stream_http_transport        = 'http';
     private static $_stream_metadata_timedout     = 'timed_out';
@@ -44,7 +44,7 @@ class ehough_shortstop_impl_exec_command_StreamsTransport extends ehough_shortst
 
     private $_statusLine;
 
-    /** @var ehough_epilog_psr_LoggerInterface */
+    /** @var ehough_epilog_Logger */
     private $_logger;
 
     public function __construct(ehough_shortstop_spi_HttpMessageParser $messageParser)
@@ -93,7 +93,9 @@ class ehough_shortstop_impl_exec_command_StreamsTransport extends ehough_shortst
      */
     protected function handleRequest(ehough_shortstop_api_HttpRequest $request)
     {
-        if ($this->_logger->isHandling(ehough_epilog_Logger::DEBUG)) {
+        $isDebugging = $this->_logger->isHandling(ehough_epilog_Logger::DEBUG);
+
+        if ($isDebugging) {
 
             $this->_logger->debug('Calling fopen()...');
         }
@@ -105,7 +107,7 @@ class ehough_shortstop_impl_exec_command_StreamsTransport extends ehough_shortst
             throw new ehough_shortstop_api_exception_RuntimeException(sprintf('Could not open handle for fopen() to %s', $request));
         }
 
-        if ($this->_logger->isHandling(ehough_epilog_Logger::DEBUG)) {
+        if ($isDebugging) {
 
             $this->_logger->debug(sprintf('Successfully used fopen() to get a handle to %s', $request->getUrl()));
         }
@@ -114,21 +116,21 @@ class ehough_shortstop_impl_exec_command_StreamsTransport extends ehough_shortst
         stream_set_timeout($handle, 5);
 
         /* read stream contents */
-        if ($this->_logger->isHandling(ehough_epilog_Logger::DEBUG)) {
+        if ($isDebugging) {
 
             $this->_logger->debug('Reading stream contents...');
         }
         $strResponse = stream_get_contents($handle);
 
         /* read stream metadata */
-        if ($this->_logger->isHandling(ehough_epilog_Logger::DEBUG)) {
+        if ($isDebugging) {
 
             $this->_logger->debug('Reading stream metadata...');
         }
         $this->_streamResultMeta = stream_get_meta_data($handle);
 
         /* close the stream... */
-        if ($this->_logger->isHandling(ehough_epilog_Logger::DEBUG)) {
+        if ($isDebugging) {
 
             $this->_logger->debug('Closing stream...');
         }
@@ -192,9 +194,11 @@ class ehough_shortstop_impl_exec_command_StreamsTransport extends ehough_shortst
      */
     function isAvailable()
     {
+        $isDebugging = $this->_logger->isHandling(ehough_epilog_Logger::DEBUG);
+
         if (! function_exists('fopen')) {
 
-            if ($this->_logger->isHandling(ehough_epilog_Logger::DEBUG)) {
+            if ($isDebugging) {
 
                 $this->_logger->debug('fopen() is not available.');
             }
@@ -204,7 +208,7 @@ class ehough_shortstop_impl_exec_command_StreamsTransport extends ehough_shortst
 
         if (function_exists('ini_get') && ini_get('allow_url_fopen') != true) {
 
-            if ($this->_logger->isHandling(ehough_epilog_Logger::DEBUG)) {
+            if ($isDebugging) {
 
                 $this->_logger->debug('allow_url_fopen is set to false.');
             }
@@ -235,7 +239,7 @@ class ehough_shortstop_impl_exec_command_StreamsTransport extends ehough_shortst
 
         if (! is_array($headerArray)) {
 
-            throw new Exception('HTTP response is missing header array');
+            throw new ehough_shortstop_api_exception_RuntimeException('HTTP response is missing header array');
         }
 
         $this->_statusLine = $headerArray[0];

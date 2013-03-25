@@ -9,14 +9,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/**
- * Decodes Transfer-Encoded HTTP messages using chain-of-responsibility.
- */
-class ehough_shortstop_impl_decoding_transfer_HttpTransferDecoderChain extends ehough_shortstop_impl_decoding_AbstractDecodingChain
-    implements ehough_shortstop_spi_HttpTransferDecoder
+class ehough_shortstop_impl_HttpTransferDecodingChainTest extends ehough_shortstop_impl_decoding_AbstractDecodingChainTest
 {
+    protected function buildSut(ehough_chaingang_api_Chain $chain)
+    {
+        return new ehough_shortstop_impl_decoding_transfer_HttpTransferDecodingChain($chain);
+    }
+
     protected function getHeaderName()
     {
         return ehough_shortstop_api_HttpResponse::HTTP_HEADER_TRANSFER_ENCODING;
     }
+
 }

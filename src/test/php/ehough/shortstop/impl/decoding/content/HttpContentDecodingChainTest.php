@@ -9,11 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-class ehough_shortstop_impl_decoding_content_HttpContentDecoderChainTest extends ehough_shortstop_impl_decoding_AbstractDecodingChainTest
+class ehough_shortstop_impl_decoding_content_HttpContentDecodingChainTest extends ehough_shortstop_impl_decoding_AbstractDecodingChainTest
 {
     protected function buildSut(ehough_chaingang_api_Chain $chain)
     {
-        return new ehough_shortstop_impl_decoding_content_HttpContentDecoderChain($chain);
+        return new ehough_shortstop_impl_decoding_content_HttpContentDecodingChain($chain);
     }
 
     protected function getHeaderName()

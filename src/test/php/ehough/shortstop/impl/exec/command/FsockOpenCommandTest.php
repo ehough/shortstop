@@ -9,16 +9,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-class ehough_shortstop_impl_exec_command_StreamsTransportTest extends ehough_shortstop_impl_exec_command_AbstractHttpTransportTest
+class ehough_shortstop_impl_exec_command_FsockOpenCommandTest extends ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommandTest
 {
 
     protected function _getSutInstance(ehough_shortstop_spi_HttpMessageParser $mp)
     {
-        return new ehough_shortstop_impl_exec_command_StreamsTransport($mp);
+        return new ehough_shortstop_impl_exec_command_FsockOpenCommand($mp);
     }
 
     protected function _isAvailable()
     {
-        return function_exists('fopen') && function_exists('ini_get') && ini_get('allow_url_fopen') == true;
+        return true;
     }
 }
