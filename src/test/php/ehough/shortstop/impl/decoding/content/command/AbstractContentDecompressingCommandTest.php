@@ -39,6 +39,11 @@ abstract class ehough_shortstop_impl_decoding_content_command_AbstractContentDec
         $this->_context->put('response', $this->_response);
 
         ob_start();
+        
+        if (!$this->_sut->isAvailable()) {
+
+            $this->markTestSkipped('Unavailabel on this installation');
+        }
     }
 
     public function tearDown()
