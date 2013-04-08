@@ -45,4 +45,9 @@ class ehough_shortstop_impl_decoding_content_command_SimulatedGzipDecompressorTe
 
         $this->assertEquals($data, $decoded);
     }
+
+    protected function isAvailable()
+    {
+        return function_exists('gzencode') && function_exists('gzdecode');
+    }
 }

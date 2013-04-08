@@ -39,8 +39,8 @@ abstract class ehough_shortstop_impl_decoding_content_command_AbstractContentDec
         $this->_context->put('response', $this->_response);
 
         ob_start();
-        
-        if (!$this->_sut->isAvailable()) {
+
+        if (!$this->isAvailable()) {
 
             $this->markTestSkipped('Unavailabel on this installation');
         }
@@ -141,6 +141,8 @@ abstract class ehough_shortstop_impl_decoding_content_command_AbstractContentDec
     protected abstract function getHeaderValue();
 
     protected abstract function getCompressed($data, $level);
+
+    protected abstract function isAvailable();
 
     protected function getContext()
     {

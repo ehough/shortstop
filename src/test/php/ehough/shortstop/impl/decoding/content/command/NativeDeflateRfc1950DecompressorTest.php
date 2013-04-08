@@ -24,4 +24,10 @@ class ehough_shortstop_impl_decoding_content_command_NativeDeflateRfc1950Decompr
     {
         return gzcompress($data, $level);
     }
+
+
+    protected function isAvailable()
+    {
+        return function_exists('gzcompress') && function_exists('gzuncompress');
+    }
 }

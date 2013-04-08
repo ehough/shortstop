@@ -24,4 +24,9 @@ class ehough_shortstop_impl_decoding_content_command_NativeDeflateRfc1951Decompr
     {
         return gzdeflate($data, $level);
     }
+
+    protected function isAvailable()
+    {
+        return function_exists('gzdeflate') && function_exists('gzinflate');
+    }
 }
