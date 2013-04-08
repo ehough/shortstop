@@ -112,8 +112,8 @@ class ehough_shortstop_impl_exec_command_StreamsCommand extends ehough_shortstop
             $this->_logger->debug(sprintf('Successfully used fopen() to get a handle to %s', $request->getUrl()));
         }
 
-        /* set the timeout to 5 seconds */
-        stream_set_timeout($handle, 5);
+        /* set the timeout to 15 seconds */
+        stream_set_timeout($handle, 15);
 
         /* read stream contents */
         if ($isDebugging) {

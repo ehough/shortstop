@@ -68,7 +68,7 @@ class ehough_shortstop_impl_exec_command_FopenCommand extends ehough_shortstop_i
             $this->_logger->debug('Successfully opened stream');
         }
 
-        stream_set_timeout($this->_handle, 5);
+        stream_set_timeout($this->_handle, 15);
 
         $rawContent = '';
 

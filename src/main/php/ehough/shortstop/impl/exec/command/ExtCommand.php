@@ -143,8 +143,8 @@ class ehough_shortstop_impl_exec_command_ExtCommand extends ehough_shortstop_imp
     private static function _buildOptionsArray(ehough_shortstop_api_HttpRequest $request)
     {
         return array(
-            self::$_option_timeout => 5,
-            self::$_option_connecttimeout => 5,
+            self::$_option_timeout => 15,
+            self::$_option_connecttimeout => 15,
             self::$_option_redirect => 5,
             self::$_option_useragent => $request->getHeaderValue(ehough_shortstop_api_HttpRequest::HTTP_HEADER_USER_AGENT),
             self::$_option_headers => $request->getAllHeaders()

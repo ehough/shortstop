@@ -180,14 +180,14 @@ class ehough_shortstop_impl_exec_command_CurlCommand extends ehough_shortstop_im
     {
         curl_setopt_array($this->_handle, array(
 
-            CURLOPT_CONNECTTIMEOUT => 5,
+            CURLOPT_CONNECTTIMEOUT => 15,
             CURLOPT_HEADER         => true,
             CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_0,
             CURLOPT_MAXREDIRS      => 5,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYHOST => 2,
             CURLOPT_SSL_VERIFYPEER => true,
-            CURLOPT_TIMEOUT        => 5,
+            CURLOPT_TIMEOUT        => 15,
             CURLOPT_URL            => $request->getUrl()->toString(),
             CURLOPT_USERAGENT      => $request->getHeaderValue(ehough_shortstop_api_HttpRequest::HTTP_HEADER_USER_AGENT),
 

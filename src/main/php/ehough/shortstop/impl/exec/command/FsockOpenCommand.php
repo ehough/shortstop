@@ -62,7 +62,7 @@ class ehough_shortstop_impl_exec_command_FsockOpenCommand extends ehough_shortst
             $this->_logger->debug('Now calling fsockopen()...');
         }
 
-        $this->_handle = @fsockopen("$host:$port", $port, $iError, $strError, 5);
+        $this->_handle = @fsockopen("$host:$port", $port, $iError, $strError, 15);
 
         if (false === $this->_handle) {
 
@@ -76,7 +76,7 @@ class ehough_shortstop_impl_exec_command_FsockOpenCommand extends ehough_shortst
 
         fwrite($this->_handle, self::_buildHeaderString($request));
 
-        stream_set_timeout($this->_handle, 5);
+        stream_set_timeout($this->_handle, 15);
 
         if ($isDebugging) {
 
