@@ -31,7 +31,7 @@ class ehough_shortstop_api_Events
     const RESPONSE = 'ehough.shortstop.response';
 
     /**
-     * Fired when
+     * Fired when an HTTP transport is selected. Allows event listeners to veto the selection.
      *
      * @subject ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
      *
@@ -41,7 +41,7 @@ class ehough_shortstop_api_Events
     const TRANSPORT_SELECTED = 'ehough.shortstop.exec.transport.selected';
 
     /**
-     * Fired when
+     * Fired after an HTTP transport is initialized to handle a request.
      *
      * @subject ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
      *
@@ -50,7 +50,7 @@ class ehough_shortstop_api_Events
     const TRANSPORT_INITIALIZED = 'ehough.shortstop.exec.transport.initialized';
 
     /**
-     * Fired when
+     * Fired after an HTTP transport successfully handles a request.
      *
      * @subject ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
      *
@@ -60,7 +60,7 @@ class ehough_shortstop_api_Events
     const TRANSPORT_SUCCESS = 'ehough.shortstop.exec.transport.success';
 
     /**
-     * Fired when
+     * Fired after an HTTP transport hits an error.
      *
      * @subject ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
      *
@@ -70,7 +70,7 @@ class ehough_shortstop_api_Events
     const TRANSPORT_FAILURE = 'ehough.shortstop.exec.transport.failure';
 
     /**
-     * Fired when
+     * Fired after an HTTP transport is deconstructed.
      *
      * @subject ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
      *

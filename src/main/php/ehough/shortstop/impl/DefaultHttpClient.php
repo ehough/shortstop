@@ -30,7 +30,7 @@ class ehough_shortstop_impl_DefaultHttpClient implements ehough_shortstop_api_Ht
     public function __construct(ehough_tickertape_EventDispatcherInterface $eventDispatcher,
         ehough_chaingang_api_Chain $chain)
     {
-        $this->_logger          = ehough_epilog_LoggerFactory::getLogger('HTTP Client Chain');
+        $this->_logger          = ehough_epilog_LoggerFactory::getLogger('Default HTTP Client');
         $this->_eventDispatcher = $eventDispatcher;
         $this->_executionChain  = $chain;
     }
