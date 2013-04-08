@@ -1,34 +1,24 @@
 <?php
 /**
- * Copyright 2012 Eric D. Hough (http://ehough.com)
+ * Copyright 2013 Eric D. Hough (http://ehough.com)
  *
  * This file is part of shortstop (https://github.com/ehough/shortstop)
  *
- * shortstop is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * shortstop is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with shortstop.  If not, see <http://www.gnu.org/licenses/>.
- *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
 abstract class ehough_shortstop_api_AbstractHttpMessageTest extends PHPUnit_Framework_TestCase
 {
     private $_sut;
 
-    function setUp()
+    public function setUp()
     {
         $this->_sut = $this->buildSut();
     }
 
-    function testSetEntity()
+    public function testSetEntity()
     {
         $entity = new ehough_shortstop_api_HttpEntity();
         $this->_sut->setEntity($entity);
@@ -38,7 +28,7 @@ abstract class ehough_shortstop_api_AbstractHttpMessageTest extends PHPUnit_Fram
     /**
      * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
-    function testGetHeaderBadName()
+    public function testGetHeaderBadName()
     {
         $this->_sut->getHeaderValue(6);
     }
@@ -46,7 +36,7 @@ abstract class ehough_shortstop_api_AbstractHttpMessageTest extends PHPUnit_Fram
     /**
      * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
-    function testSetHeaderBadValue()
+    public function testSetHeaderBadValue()
     {
         $this->_sut->setHeader(5, 'two');
     }
@@ -54,12 +44,12 @@ abstract class ehough_shortstop_api_AbstractHttpMessageTest extends PHPUnit_Fram
     /**
      * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
-    function testSetHeaderBadName()
+    public function testSetHeaderBadName()
     {
         $this->_sut->setHeader(5, 'two');
     }
 
-    function testSetGetHeader()
+    public function testSetGetHeader()
     {
 
         $this->_sut->setHeader('something', 'else');
@@ -72,7 +62,7 @@ abstract class ehough_shortstop_api_AbstractHttpMessageTest extends PHPUnit_Fram
         $this->assertEquals(array('foo' => 'bar'), $this->_sut->getAllHeaders(), 'Header "something" did not get removed');
     }
 
-    function testGetHeaderNotExist()
+    public function testGetHeaderNotExist()
     {
 
         $this->assertFalse($this->_sut->containsHeader('something'));

@@ -1,33 +1,23 @@
 <?php
 /**
- * Copyright 2012 Eric D. Hough (http://ehough.com)
+ * Copyright 2013 Eric D. Hough (http://ehough.com)
  *
  * This file is part of shortstop (https://github.com/ehough/shortstop)
  *
- * shortstop is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * shortstop is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with shortstop.  If not, see <http://www.gnu.org/licenses/>.
- *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
 class ehough_shortstop_api_HttpResponseTest extends ehough_shortstop_api_AbstractHttpMessageTest
 {
-    function buildSut()
+    public function buildSut()
     {
         return new ehough_shortstop_api_HttpResponse();
     }
 
 
-    function testSetResponseCode()
+    public function testSetResponseCode()
     {
         $this->getSut()->setStatusCode(134.2);
         $this->assertEquals(134, $this->getSut()->getStatusCode());
@@ -39,7 +29,7 @@ class ehough_shortstop_api_HttpResponseTest extends ehough_shortstop_api_Abstrac
     /**
      * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
-    function testSetStatusCodeTooHigh()
+    public function testSetStatusCodeTooHigh()
     {
         $this->getSut()->setStatusCode(600);
     }
@@ -47,7 +37,7 @@ class ehough_shortstop_api_HttpResponseTest extends ehough_shortstop_api_Abstrac
     /**
      * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
-    function testSetStatusCodeTooLow()
+    public function testSetStatusCodeTooLow()
     {
         $this->getSut()->setStatusCode(99);
     }
@@ -55,7 +45,7 @@ class ehough_shortstop_api_HttpResponseTest extends ehough_shortstop_api_Abstrac
     /**
      * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
-    function testSetResponseCodeNonNumeric()
+    public function testSetResponseCodeNonNumeric()
     {
         $this->getSut()->setStatusCode('something');
     }
