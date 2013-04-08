@@ -23,7 +23,7 @@ class ehough_shortstop_impl_DefaultHttpClientTest extends PHPUnit_Framework_Test
     private $_mockChain;
     private $_mockEventDispatcher;
 
-    function setup()
+    public function setup()
     {
         $this->_mockChain           = ehough_mockery_Mockery::mock('ehough_chaingang_api_Chain');
         $this->_mockEventDispatcher = ehough_mockery_Mockery::mock('ehough_tickertape_EventDispatcherInterface');
@@ -45,7 +45,7 @@ class ehough_shortstop_impl_DefaultHttpClientTest extends PHPUnit_Framework_Test
         ehough_mockery_Mockery::close();
     }
 
-    function testGet()
+    public function testGet()
     {
         $request = $this->_request;
         $response = $this->_response;
@@ -80,7 +80,7 @@ class ehough_shortstop_impl_DefaultHttpClientTest extends PHPUnit_Framework_Test
     /**
      * @expectedException ehough_shortstop_api_exception_RuntimeException
      */
-    function testGetNoCommandsCouldHandle()
+    public function testGetNoCommandsCouldHandle()
     {
         $request = $this->_request;
         $response = $this->_response;

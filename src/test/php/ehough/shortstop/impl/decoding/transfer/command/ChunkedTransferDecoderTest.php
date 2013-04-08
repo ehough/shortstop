@@ -17,7 +17,7 @@ class ehough_shortstop_impl_transferencoding_ChunkTransferDecoderTest extends PH
 
     private $_entity;
 
-    function setup()
+    public function setup()
     {
         $this->_sut      = new ehough_shortstop_impl_decoding_transfer_command_ChunkedTransferDecodingCommand();
         $this->_response = new ehough_shortstop_api_HttpResponse();
@@ -27,7 +27,7 @@ class ehough_shortstop_impl_transferencoding_ChunkTransferDecoderTest extends PH
     /**
      * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
-    function testDecodeBadData()
+    public function testDecodeBadData()
     {
         $tests = $this->_decodeTestArray();
 
@@ -41,7 +41,7 @@ class ehough_shortstop_impl_transferencoding_ChunkTransferDecoderTest extends PH
         $result = $this->_sut->execute($context);
     }
 
-    function testDecodeNotChunked()
+    public function testDecodeNotChunked()
     {
         $tests = $this->_decodeTestArray();
         foreach ($tests as $decoded => $encoded) {
@@ -54,7 +54,7 @@ class ehough_shortstop_impl_transferencoding_ChunkTransferDecoderTest extends PH
         }
     }
 
-    function testDecode()
+    public function testDecode()
     {
         $tests = $this->_decodeTestArray();
         foreach ($tests as $decoded => $encoded) {

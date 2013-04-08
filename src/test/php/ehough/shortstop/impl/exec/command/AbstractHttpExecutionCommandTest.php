@@ -17,7 +17,7 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommandTe
     private $_mockHttpMessageParser;
     private $_mockEventDispatcher;
 
-    function setUp()
+    public function setUp()
     {
         $this->_mockHttpMessageParser = ehough_mockery_Mockery::mock('ehough_shortstop_spi_HttpMessageParser');
         $this->_mockEventDispatcher   = ehough_mockery_Mockery::mock('ehough_tickertape_EventDispatcherInterface');
@@ -56,7 +56,7 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommandTe
         });
     }
 
-    function testGet200Plain()
+    public function testGet200Plain()
     {
         $this->_testGet200Plain();
         $this->_testGet200Plain();
@@ -73,7 +73,7 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommandTe
         $this->_getTest('code-200-plain.php', 34, 'text/html', 200, $this->_contents200Plain());
     }
 
-    function testGet404()
+    public function testGet404()
     {
 
         $this->_testGet404();

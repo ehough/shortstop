@@ -12,25 +12,25 @@
 class ehough_shortstop_api_HttpRequestTest extends ehough_shortstop_api_AbstractHttpMessageTest
 {
 
-    function buildSut()
+    public function buildSut()
     {
         return new ehough_shortstop_api_HttpRequest(ehough_shortstop_api_HttpRequest::HTTP_METHOD_GET, 'http://tubepress.org/foo.html');
     }
 
-    function testToString()
+    public function testToString()
     {
         $expected = 'GET to http://tubepress.org/foo.html';
         $this->assertEquals($expected, $this->getSut()->toString());
         $this->assertEquals($expected, $this->getSut()->__toString());
     }
 
-    function testToHTML()
+    public function testToHTML()
     {
         $expected = 'GET to <a href="http://tubepress.org/foo.html">URL</a>';
         $this->assertEquals($expected, $this->getSut()->toHTML());
     }
 
-    function testSetUrlUrl()
+    public function testSetUrlUrl()
     {
         $url = new ehough_curly_Url('http://tubepress.org/foo.html');
         $this->getSut()->setUrl($url);
@@ -43,12 +43,12 @@ class ehough_shortstop_api_HttpRequestTest extends ehough_shortstop_api_Abstract
     /**
      * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
-    function testSetUrlBadArg()
+    public function testSetUrlBadArg()
     {
         $this->getSut()->setUrl(4);
     }
 
-    function testSetUrlString()
+    public function testSetUrlString()
     {
         $this->getSut()->setUrl('http://tubepress.org/foo.html');
         $url = $this->getSut()->getUrl();
@@ -57,7 +57,7 @@ class ehough_shortstop_api_HttpRequestTest extends ehough_shortstop_api_Abstract
         $this->assertEquals('http://tubepress.org/foo.html', $url->toString());
     }
 
-    function testSetGetMethod()
+    public function testSetGetMethod()
     {
         $this->getSut()->setMethod('pOsT');
         $this->assertEquals('POST', $this->getSut()->getMethod());
@@ -66,7 +66,7 @@ class ehough_shortstop_api_HttpRequestTest extends ehough_shortstop_api_Abstract
     /**
      * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
-    function testSetBadMethod()
+    public function testSetBadMethod()
     {
         $this->getSut()->setMethod('something dumb');
     }

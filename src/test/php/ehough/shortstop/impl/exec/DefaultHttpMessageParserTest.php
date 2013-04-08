@@ -16,22 +16,22 @@ class ehough_shortstop_impl_exec_DefaultHttpMessageParserTest extends PHPUnit_Fr
      */
     private $_sut;
 
-    function setup()
+    public function setup()
     {
         $this->_sut = new ehough_shortstop_impl_exec_DefaultHttpMessageParser();
     }
 
-    function testGetHeaderArrayNullMessage()
+    public function testGetHeaderArrayNullMessage()
     {
         $this->assertEquals(array(), $this->_sut->getArrayOfHeadersFromRawHeaderString(null));
     }
 
-    function testGetHeaderArrayBadMessage()
+    public function testGetHeaderArrayBadMessage()
     {
         $this->assertEquals(array(), $this->_sut->getArrayOfHeadersFromRawHeaderString('this is a string with nothing in it'));
     }
 
-    function testGetHeaderArraySomeBadMessages()
+    public function testGetHeaderArraySomeBadMessages()
     {
         $expected = array(
             'Header' => 'Value',
@@ -40,7 +40,7 @@ class ehough_shortstop_impl_exec_DefaultHttpMessageParserTest extends PHPUnit_Fr
         $this->assertEquals($expected, $this->_sut->getArrayOfHeadersFromRawHeaderString("Header: Value\r\ntthis is a string with nothing in it\r\nAnother: \theader\r\nHeader21:\r\n"));
     }
 
-    function testGetHeaderArrayMultipleHeaders()
+    public function testGetHeaderArrayMultipleHeaders()
     {
         $expected = array(
             'Header' => array('Value', 'something else'),
@@ -49,7 +49,7 @@ class ehough_shortstop_impl_exec_DefaultHttpMessageParserTest extends PHPUnit_Fr
         $this->assertEquals($expected, $this->_sut->getArrayOfHeadersFromRawHeaderString("Header: Value\r\nAnother: \theader\r\nHeader: something else\r\n"));
     }
 
-    function testGetHeaderAsString()
+    public function testGetHeaderAsString()
     {
         $message = new ehough_shortstop_api_HttpResponse();
         $message->setHeader('one', 'two');
@@ -59,37 +59,37 @@ class ehough_shortstop_impl_exec_DefaultHttpMessageParserTest extends PHPUnit_Fr
         $this->assertEquals("one: two\r\nthree: four\r\n", $result);
     }
 
-    function testGetHeadersStringFromRawHttpMessage()
+    public function testGetHeadersStringFromRawHttpMessage()
     {
         $result = $this->_sut->getHeadersStringFromRawHttpMessage("headers\r\n\r\nHeaders");
         $this->assertEquals('headers', $result);
     }
 
-    function testGetHeadersStringFromRawHttpMessageBadMessage()
+    public function testGetHeadersStringFromRawHttpMessageBadMessage()
     {
         $result = $this->_sut->getHeadersStringFromRawHttpMessage("something");
         $this->assertEquals('something', $result);
     }
 
-    function testGetHeadersStringFromRawHttpMessageNullMessage()
+    public function testGetHeadersStringFromRawHttpMessageNullMessage()
     {
         $result = $this->_sut->getHeadersStringFromRawHttpMessage(null);
         $this->assertNull($result);
     }
 
-    function testGetBodyStringFromRawHttpMessage()
+    public function testGetBodyStringFromRawHttpMessage()
     {
         $result = $this->_sut->getBodyStringFromRawHttpMessage("headers\r\n\r\nbody");
         $this->assertEquals('body', $result);
     }
 
-    function testGetBodyStringFromRawHttpMessageBadMessage()
+    public function testGetBodyStringFromRawHttpMessageBadMessage()
     {
         $result = $this->_sut->getBodyStringFromRawHttpMessage("something");
         $this->assertNull($result);
     }
 
-    function testGetBodyStringFromRawHttpMessageNullMessage()
+    public function testGetBodyStringFromRawHttpMessageNullMessage()
     {
         $result = $this->_sut->getBodyStringFromRawHttpMessage(null);
         $this->assertNull($result);

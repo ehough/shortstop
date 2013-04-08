@@ -11,13 +11,13 @@
 
 class ehough_shortstop_api_HttpResponseTest extends ehough_shortstop_api_AbstractHttpMessageTest
 {
-    function buildSut()
+    public function buildSut()
     {
         return new ehough_shortstop_api_HttpResponse();
     }
 
 
-    function testSetResponseCode()
+    public function testSetResponseCode()
     {
         $this->getSut()->setStatusCode(134.2);
         $this->assertEquals(134, $this->getSut()->getStatusCode());
@@ -29,7 +29,7 @@ class ehough_shortstop_api_HttpResponseTest extends ehough_shortstop_api_Abstrac
     /**
      * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
-    function testSetStatusCodeTooHigh()
+    public function testSetStatusCodeTooHigh()
     {
         $this->getSut()->setStatusCode(600);
     }
@@ -37,7 +37,7 @@ class ehough_shortstop_api_HttpResponseTest extends ehough_shortstop_api_Abstrac
     /**
      * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
-    function testSetStatusCodeTooLow()
+    public function testSetStatusCodeTooLow()
     {
         $this->getSut()->setStatusCode(99);
     }
@@ -45,7 +45,7 @@ class ehough_shortstop_api_HttpResponseTest extends ehough_shortstop_api_Abstrac
     /**
      * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
-    function testSetResponseCodeNonNumeric()
+    public function testSetResponseCodeNonNumeric()
     {
         $this->getSut()->setStatusCode('something');
     }

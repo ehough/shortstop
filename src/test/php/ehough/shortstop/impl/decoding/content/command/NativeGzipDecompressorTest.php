@@ -25,7 +25,7 @@ class ehough_shortstop_impl_decoding_content_command_NativeGzipDecompressorTest 
         return gzencode($data, $level);
     }
 
-    function testDecompressFile()
+    public function testDecompressFile()
     {
         global $data;
 

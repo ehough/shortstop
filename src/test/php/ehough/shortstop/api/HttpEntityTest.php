@@ -13,12 +13,12 @@ class ehough_shortstop_api_HttpEntityTest extends PHPUnit_Framework_TestCase
 {
     private $_sut;
 
-    function setUp()
+    public function setUp()
     {
         $this->_sut = new ehough_shortstop_api_HttpEntity();
     }
 
-    function testSetGetContentType()
+    public function testSetGetContentType()
     {
         $this->_sut->setContentType('hello you');
         $this->assertEquals('hello you', $this->_sut->getContentType());
@@ -27,7 +27,7 @@ class ehough_shortstop_api_HttpEntityTest extends PHPUnit_Framework_TestCase
     /**
      * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
-    function testSetNonStringContentType()
+    public function testSetNonStringContentType()
     {
         $this->_sut->setContentType(4);
     }
@@ -35,7 +35,7 @@ class ehough_shortstop_api_HttpEntityTest extends PHPUnit_Framework_TestCase
     /**
      * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
-    function testSetNegativeContentLength()
+    public function testSetNegativeContentLength()
     {
         $this->_sut->setContentLength(-1);
     }
@@ -43,12 +43,12 @@ class ehough_shortstop_api_HttpEntityTest extends PHPUnit_Framework_TestCase
     /**
      * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
-    function testSetBadContentLength()
+    public function testSetBadContentLength()
     {
         $this->_sut->setContentLength('something');
     }
 
-    function testSetGetContentLength()
+    public function testSetGetContentLength()
     {
         $this->_sut->setContentLength(55);
         $this->assertEquals(55, $this->_sut->getContentLength());
@@ -57,7 +57,7 @@ class ehough_shortstop_api_HttpEntityTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(45, $this->_sut->getContentLength());
     }
 
-    function testSetContent()
+    public function testSetContent()
     {
         $tests = array(
 

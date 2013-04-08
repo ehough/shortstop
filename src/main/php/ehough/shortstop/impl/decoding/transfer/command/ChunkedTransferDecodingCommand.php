@@ -35,7 +35,7 @@ class ehough_shortstop_impl_decoding_transfer_command_ChunkedTransferDecodingCom
      *                 processing of this Context should be delegated to a subsequent Command
      *                 in an enclosing Chain.
      */
-    function execute(ehough_chaingang_api_Context $context)
+    public function execute(ehough_chaingang_api_Context $context)
     {
         $response = $context->get('response');
         $encoding = $response->getHeaderValue(ehough_shortstop_api_HttpResponse::HTTP_HEADER_TRANSFER_ENCODING);

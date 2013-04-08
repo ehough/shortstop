@@ -31,7 +31,7 @@ abstract class ehough_shortstop_impl_decoding_AbstractDecodingChainTest extends 
      */
     private $_chain;
 
-    function setup()
+    public function setup()
     {
         $this->_chain    = ehough_mockery_Mockery::mock('ehough_chaingang_api_Chain');
         $this->_sut      = $this->buildSut($this->_chain);
@@ -39,7 +39,7 @@ abstract class ehough_shortstop_impl_decoding_AbstractDecodingChainTest extends 
         $this->_entity   = new ehough_shortstop_api_HttpEntity();
     }
 
-    function testCannotDecode()
+    public function testCannotDecode()
     {
         $ctx = $this->_response;
 
@@ -54,7 +54,7 @@ abstract class ehough_shortstop_impl_decoding_AbstractDecodingChainTest extends 
         $this->assertTrue(true);
     }
 
-    function testDecode()
+    public function testDecode()
     {
         $response = $this->_response;
         $response->setEntity($this->_entity);
@@ -76,7 +76,7 @@ abstract class ehough_shortstop_impl_decoding_AbstractDecodingChainTest extends 
         $this->assertTrue($this->_response->getEntity()->getContentLength() === 14);
     }
 
-    function testIsEncoded()
+    public function testIsEncoded()
     {
         $this->_entity->setContent('something');
         $this->_response->setHeader($this->getHeaderName(), 'anything');
@@ -85,7 +85,7 @@ abstract class ehough_shortstop_impl_decoding_AbstractDecodingChainTest extends 
         $this->assertTrue($this->_sut->needsToBeDecoded($this->_response));
     }
 
-    function testIsEncodedNoHeader()
+    public function testIsEncodedNoHeader()
     {
         $this->_response->setEntity($this->_entity);
         $this->_entity->setContent('something');
@@ -93,14 +93,14 @@ abstract class ehough_shortstop_impl_decoding_AbstractDecodingChainTest extends 
         $this->assertFalse($this->_sut->needsToBeDecoded($this->_response));
     }
 
-    function testIsEncodedEmptyContent()
+    public function testIsEncodedEmptyContent()
     {
         $this->_response->setEntity($this->_entity);
         $this->_entity->setContent('');
         $this->assertFalse($this->_sut->needsToBeDecoded($this->_response));
     }
 
-    function testIsEncodedNullContent()
+    public function testIsEncodedNullContent()
     {
         $this->_response->setEntity($this->_entity);
         $this->_entity->setContent(null);

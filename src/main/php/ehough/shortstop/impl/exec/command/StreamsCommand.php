@@ -192,7 +192,7 @@ class ehough_shortstop_impl_exec_command_StreamsCommand extends ehough_shortstop
      *
      * @return bool True if this transport is available on the system. False otherwise.
      */
-    function isAvailable()
+    public function isAvailable()
     {
         $isDebugging = $this->_logger->isHandling(ehough_epilog_Logger::DEBUG);
 
@@ -226,7 +226,7 @@ class ehough_shortstop_impl_exec_command_StreamsCommand extends ehough_shortstop
      *
      * @return bool True if this transport can handle the given request. False otherwise.
      */
-    function canHandle(ehough_shortstop_api_HttpRequest $request)
+    public function canHandle(ehough_shortstop_api_HttpRequest $request)
     {
         $scheme = $request->getUrl()->getScheme();
 

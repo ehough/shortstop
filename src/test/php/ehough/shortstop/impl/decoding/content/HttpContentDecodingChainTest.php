@@ -26,7 +26,7 @@ class ehough_shortstop_impl_decoding_content_HttpContentDecodingChainTest extend
         return 'chuNkEd';
     }
 
-    function testGetAcceptEncodingHeader()
+    public function testGetAcceptEncodingHeader()
     {
         $this->assertEquals('gzip;q=1.0, deflate;q=0.5', $this->getSut()->getAcceptEncodingHeaderValue());
     }

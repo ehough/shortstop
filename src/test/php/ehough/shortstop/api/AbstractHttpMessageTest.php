@@ -13,12 +13,12 @@ abstract class ehough_shortstop_api_AbstractHttpMessageTest extends PHPUnit_Fram
 {
     private $_sut;
 
-    function setUp()
+    public function setUp()
     {
         $this->_sut = $this->buildSut();
     }
 
-    function testSetEntity()
+    public function testSetEntity()
     {
         $entity = new ehough_shortstop_api_HttpEntity();
         $this->_sut->setEntity($entity);
@@ -28,7 +28,7 @@ abstract class ehough_shortstop_api_AbstractHttpMessageTest extends PHPUnit_Fram
     /**
      * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
-    function testGetHeaderBadName()
+    public function testGetHeaderBadName()
     {
         $this->_sut->getHeaderValue(6);
     }
@@ -36,7 +36,7 @@ abstract class ehough_shortstop_api_AbstractHttpMessageTest extends PHPUnit_Fram
     /**
      * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
-    function testSetHeaderBadValue()
+    public function testSetHeaderBadValue()
     {
         $this->_sut->setHeader(5, 'two');
     }
@@ -44,12 +44,12 @@ abstract class ehough_shortstop_api_AbstractHttpMessageTest extends PHPUnit_Fram
     /**
      * @expectedException ehough_shortstop_api_exception_InvalidArgumentException
      */
-    function testSetHeaderBadName()
+    public function testSetHeaderBadName()
     {
         $this->_sut->setHeader(5, 'two');
     }
 
-    function testSetGetHeader()
+    public function testSetGetHeader()
     {
 
         $this->_sut->setHeader('something', 'else');
@@ -62,7 +62,7 @@ abstract class ehough_shortstop_api_AbstractHttpMessageTest extends PHPUnit_Fram
         $this->assertEquals(array('foo' => 'bar'), $this->_sut->getAllHeaders(), 'Header "something" did not get removed');
     }
 
-    function testGetHeaderNotExist()
+    public function testGetHeaderNotExist()
     {
 
         $this->assertFalse($this->_sut->containsHeader('something'));

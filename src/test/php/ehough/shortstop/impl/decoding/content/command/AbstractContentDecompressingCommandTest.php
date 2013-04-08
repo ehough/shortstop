@@ -28,7 +28,7 @@ abstract class ehough_shortstop_impl_decoding_content_command_AbstractContentDec
      */
     private $_response;
 
-    function setUp()
+    public function setUp()
     {
         $this->_sut = $this->buildSut();
 
@@ -41,12 +41,12 @@ abstract class ehough_shortstop_impl_decoding_content_command_AbstractContentDec
         ob_start();
     }
 
-    function tearDown()
+    public function tearDown()
     {
         ob_end_clean();
     }
 
-    function testCannotDecompressObject()
+    public function testCannotDecompressObject()
     {
         $entity   = new ehough_shortstop_api_HttpEntity();
         $this->_response->setEntity($entity);
@@ -59,7 +59,7 @@ abstract class ehough_shortstop_impl_decoding_content_command_AbstractContentDec
     }
 
 
-    function testCannotDecompressReservedBitsSet()
+    public function testCannotDecompressReservedBitsSet()
     {
         global $data;
 
@@ -77,7 +77,7 @@ abstract class ehough_shortstop_impl_decoding_content_command_AbstractContentDec
         $this->assertTrue(true);
     }
 
-    function testCannotDecompressString()
+    public function testCannotDecompressString()
     {
         $entity   = new ehough_shortstop_api_HttpEntity();
 
@@ -89,14 +89,14 @@ abstract class ehough_shortstop_impl_decoding_content_command_AbstractContentDec
         $this->assertFalse($result);
     }
 
-    function testNoContentEncodingHeader()
+    public function testNoContentEncodingHeader()
     {
         $this->_response->setHeader(ehough_shortstop_api_HttpResponse::HTTP_HEADER_CONTENT_ENCODING, null);
 
         $this->assertFalse($this->_sut->execute($this->_context));
     }
 
-    function testCompress()
+    public function testCompress()
     {
         for ($x = 1; $x < 10; $x++) {
 
@@ -111,7 +111,7 @@ abstract class ehough_shortstop_impl_decoding_content_command_AbstractContentDec
         }
     }
 
-    function _testCompress($level)
+    public function _testCompress($level)
     {
         global $data;
 
