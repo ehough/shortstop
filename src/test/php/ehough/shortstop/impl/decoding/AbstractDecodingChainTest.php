@@ -33,7 +33,7 @@ abstract class ehough_shortstop_impl_decoding_AbstractDecodingChainTest extends 
 
     function setup()
     {
-        $this->_chain    = Mockery::mock('ehough_chaingang_api_Chain');
+        $this->_chain    = ehough_mockery_Mockery::mock('ehough_chaingang_api_Chain');
         $this->_sut      = $this->buildSut($this->_chain);
         $this->_response = new ehough_shortstop_api_HttpResponse();
         $this->_entity   = new ehough_shortstop_api_HttpEntity();
@@ -43,7 +43,7 @@ abstract class ehough_shortstop_impl_decoding_AbstractDecodingChainTest extends 
     {
         $ctx = $this->_response;
 
-        $this->_chain->shouldReceive('execute')->once()->with(Mockery::on(function ($arg) use ($ctx) {
+        $this->_chain->shouldReceive('execute')->once()->with(ehough_mockery_Mockery::on(function ($arg) use ($ctx) {
 
             return $ctx === $arg->get('response');
 
@@ -60,7 +60,7 @@ abstract class ehough_shortstop_impl_decoding_AbstractDecodingChainTest extends 
         $response->setEntity($this->_entity);
         $response->setHeader(ehough_shortstop_api_HttpMessage::HTTP_HEADER_CONTENT_TYPE, 'fooey');
 
-        $this->_chain->shouldReceive('execute')->once()->with(Mockery::on(function ($arg) use ($response) {
+        $this->_chain->shouldReceive('execute')->once()->with(ehough_mockery_Mockery::on(function ($arg) use ($response) {
 
             $ok = $response === $arg->get('response');
 

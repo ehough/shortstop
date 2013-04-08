@@ -20,7 +20,7 @@ class ehough_shortstop_impl_listeners_response_ResponseDecodingListenerTest exte
 
     public function setUp()
     {
-        $this->_mockHttpResponseDecoder = Mockery::mock('ehough_shortstop_spi_HttpResponseDecoder');
+        $this->_mockHttpResponseDecoder = ehough_mockery_Mockery::mock('ehough_shortstop_spi_HttpResponseDecoder');
 
         $this->_sut = new ehough_shortstop_impl_listeners_response_ResponseDecodingListener($this->_mockHttpResponseDecoder, 'fake');
     }

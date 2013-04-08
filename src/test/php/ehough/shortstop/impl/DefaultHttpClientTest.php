@@ -25,8 +25,8 @@ class ehough_shortstop_impl_DefaultHttpClientTest extends PHPUnit_Framework_Test
 
     function setup()
     {
-        $this->_mockChain           = Mockery::mock('ehough_chaingang_api_Chain');
-        $this->_mockEventDispatcher = Mockery::mock('ehough_tickertape_EventDispatcherInterface');
+        $this->_mockChain           = ehough_mockery_Mockery::mock('ehough_chaingang_api_Chain');
+        $this->_mockEventDispatcher = ehough_mockery_Mockery::mock('ehough_tickertape_EventDispatcherInterface');
 
         $this->_sut = new ehough_shortstop_impl_DefaultHttpClient(
 
@@ -42,7 +42,7 @@ class ehough_shortstop_impl_DefaultHttpClientTest extends PHPUnit_Framework_Test
 
     public function tearDown()
     {
-        Mockery::close();
+        ehough_mockery_Mockery::close();
     }
 
     function testGet()
@@ -50,21 +50,21 @@ class ehough_shortstop_impl_DefaultHttpClientTest extends PHPUnit_Framework_Test
         $request = $this->_request;
         $response = $this->_response;
 
-        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::REQUEST, Mockery::on(function ($event) use ($request) {
+        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::REQUEST, ehough_mockery_Mockery::on(function ($event) use ($request) {
 
             $req = $event->getSubject();
 
             return $req === $request;
         }));
 
-        $this->_mockChain->shouldReceive('execute')->once()->with(Mockery::on(function ($context) use ($request, $response) {
+        $this->_mockChain->shouldReceive('execute')->once()->with(ehough_mockery_Mockery::on(function ($context) use ($request, $response) {
 
             $context->put('response', $response);
 
             return $context instanceof ehough_chaingang_api_Context && $context->get('request') === $request;
         }))->andReturn(true);
 
-        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::RESPONSE, Mockery::on(function ($event) use ($request, $response) {
+        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::RESPONSE, ehough_mockery_Mockery::on(function ($event) use ($request, $response) {
 
             $resp = $event->getSubject();
             $req  = $event->getArgument('request');
@@ -85,14 +85,14 @@ class ehough_shortstop_impl_DefaultHttpClientTest extends PHPUnit_Framework_Test
         $request = $this->_request;
         $response = $this->_response;
 
-        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::REQUEST, Mockery::on(function ($event) use ($request) {
+        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::REQUEST, ehough_mockery_Mockery::on(function ($event) use ($request) {
 
             $req = $event->getSubject();
 
             return $req === $request;
         }));
 
-        $this->_mockChain->shouldReceive('execute')->once()->with(Mockery::on(function ($context) use ($request, $response) {
+        $this->_mockChain->shouldReceive('execute')->once()->with(ehough_mockery_Mockery::on(function ($context) use ($request, $response) {
 
             $context->put('response', $response);
 

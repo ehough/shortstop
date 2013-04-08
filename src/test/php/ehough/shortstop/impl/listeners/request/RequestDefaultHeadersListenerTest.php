@@ -20,7 +20,7 @@ class ehough_shortstop_impl_listeners_request_RequestDefaultHeadersListenerTest 
 
     public function setUp()
     {
-        $this->_mockHttpContentDecoder = Mockery::mock('ehough_shortstop_spi_HttpContentDecoder');
+        $this->_mockHttpContentDecoder = ehough_mockery_Mockery::mock('ehough_shortstop_spi_HttpContentDecoder');
 
         $this->_sut = new ehough_shortstop_impl_listeners_request_RequestDefaultHeadersListener($this->_mockHttpContentDecoder);
     }
