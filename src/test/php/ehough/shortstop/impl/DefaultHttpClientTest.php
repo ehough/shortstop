@@ -23,6 +23,9 @@ class ehough_shortstop_impl_DefaultHttpClientTest extends PHPUnit_Framework_Test
     private $_mockChain;
     private $_mockEventDispatcher;
 
+    private $_closureVarRequest;
+    private $_closureVarResponse;
+
     public function setup()
     {
         $this->_mockChain           = ehough_mockery_Mockery::mock('ehough_chaingang_api_Chain');
@@ -50,31 +53,40 @@ class ehough_shortstop_impl_DefaultHttpClientTest extends PHPUnit_Framework_Test
         $request = $this->_request;
         $response = $this->_response;
 
-        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::REQUEST, ehough_mockery_Mockery::on(function ($event) use ($request) {
+        $this->_closureVarRequest = $request;
+        $this->_closureVarResponse = $response;
 
-            $req = $event->getSubject();
+        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::REQUEST, ehough_mockery_Mockery::on(array($this, '_callbackTestGet1')));
 
-            return $req === $request;
-        }));
+        $this->_mockChain->shouldReceive('execute')->once()->with(ehough_mockery_Mockery::on(array($this, '_callbackTestGet2')))->andReturn(true);
 
-        $this->_mockChain->shouldReceive('execute')->once()->with(ehough_mockery_Mockery::on(function ($context) use ($request, $response) {
-
-            $context->put('response', $response);
-
-            return $context instanceof ehough_chaingang_api_Context && $context->get('request') === $request;
-        }))->andReturn(true);
-
-        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::RESPONSE, ehough_mockery_Mockery::on(function ($event) use ($request, $response) {
-
-            $resp = $event->getSubject();
-            $req  = $event->getArgument('request');
-
-            return $req === $request && $resp === $response;
-        }));
+        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::RESPONSE, ehough_mockery_Mockery::on(array($this, '_callbackTestGet3')));
 
         $response = $this->_sut->execute($this->_request);
 
         $this->assertSame($this->_response, $response);
+    }
+
+    public function _callbackTestGet1($event)
+    {
+        $req = $event->getSubject();
+
+        return $req === $this->_closureVarRequest;
+    }
+
+    public function _callbackTestGet2($context)
+    {
+        $context->put('response', $this->_closureVarResponse);
+
+        return $context instanceof ehough_chaingang_api_Context && $context->get('request') === $this->_closureVarRequest;
+    }
+
+    public function _callbackTestGet3($event)
+    {
+        $resp = $event->getSubject();
+        $req  = $event->getArgument('request');
+
+        return $req === $this->_closureVarRequest && $resp === $this->_closureVarResponse;
     }
 
     /**
@@ -82,23 +94,27 @@ class ehough_shortstop_impl_DefaultHttpClientTest extends PHPUnit_Framework_Test
      */
     public function testGetNoCommandsCouldHandle()
     {
-        $request = $this->_request;
-        $response = $this->_response;
+        $this->_closureVarRequest = $this->_request;
+        $this->_closureVarResponse = $this->_response;
 
-        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::REQUEST, ehough_mockery_Mockery::on(function ($event) use ($request) {
+        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::REQUEST, ehough_mockery_Mockery::on(array($this, '_callbackTestGetNoCommandsCouldHandle1')));
 
-            $req = $event->getSubject();
-
-            return $req === $request;
-        }));
-
-        $this->_mockChain->shouldReceive('execute')->once()->with(ehough_mockery_Mockery::on(function ($context) use ($request, $response) {
-
-            $context->put('response', $response);
-
-            return $context instanceof ehough_chaingang_api_Context && $context->get('request') === $request;
-        }))->andReturn(false);
+        $this->_mockChain->shouldReceive('execute')->once()->with(ehough_mockery_Mockery::on(array($this, '_callbackTestGetNoCommandsCouldHandle2')))->andReturn(false);
 
         $this->_sut->execute($this->_request);
+    }
+
+    public function _callbackTestGetNoCommandsCouldHandle1($event)
+    {
+        $req = $event->getSubject();
+
+        return $req === $this->_closureVarRequest;
+    }
+
+    public function _callbackTestGetNoCommandsCouldHandle2($context)
+    {
+        $context->put('response', $this->_closureVarResponse);
+
+        return $context instanceof ehough_chaingang_api_Context && $context->get('request') === $this->_closureVarRequest;
     }
 }

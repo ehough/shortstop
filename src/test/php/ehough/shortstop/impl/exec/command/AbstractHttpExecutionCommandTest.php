@@ -16,6 +16,7 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommandTe
     private $_server;
     private $_mockHttpMessageParser;
     private $_mockEventDispatcher;
+    private $_closureVarRequest;
 
     public function setUp()
     {
@@ -24,36 +25,38 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommandTe
         $this->_sut                   = $this->_getSutInstance($this->_mockHttpMessageParser, $this->_mockEventDispatcher);
         $this->_server                = 'http://tubepress.org/http_tests';
 
-        $this->_mockHttpMessageParser->shouldReceive('getHeadersStringFromRawHttpMessage')->andReturnUsing(function ($data) {
+        $this->_mockHttpMessageParser->shouldReceive('getHeadersStringFromRawHttpMessage')->andReturnUsing(array($this, '_callbackSetup1'));
+        $this->_mockHttpMessageParser->shouldReceive('getBodyStringFromRawHttpMessage')->andReturnUsing(array($this, '_callbackSetup2'));
+        $this->_mockHttpMessageParser->shouldReceive('getArrayOfHeadersFromRawHeaderString')->andReturnUsing(array($this, '_callbackSetup3'));
+        $this->_mockHttpMessageParser->shouldReceive('getHeaderArrayAsString')->andReturnUsing(array($this, '_callbackSetup4'));
+    }
 
-            $x = new ehough_shortstop_impl_exec_DefaultHttpMessageParser();
+    public function _callbackSetup1($data)
+    {
+        $x = new ehough_shortstop_impl_exec_DefaultHttpMessageParser();
 
-            return $x->getHeadersStringFromRawHttpMessage($data);
+        return $x->getHeadersStringFromRawHttpMessage($data);
+    }
 
-        });
+    public function _callbackSetup2($data)
+    {
+        $x = new ehough_shortstop_impl_exec_DefaultHttpMessageParser();
 
-        $this->_mockHttpMessageParser->shouldReceive('getBodyStringFromRawHttpMessage')->andReturnUsing(function ($data) {
+        return $x->getBodyStringFromRawHttpMessage($data);
+    }
 
-            $x = new ehough_shortstop_impl_exec_DefaultHttpMessageParser();
+    public function _callbackSetup3($data)
+    {
+        $x = new ehough_shortstop_impl_exec_DefaultHttpMessageParser();
 
-            return $x->getBodyStringFromRawHttpMessage($data);
+        return $x->getArrayOfHeadersFromRawHeaderString($data);
+    }
 
-        });
+    public function _callbackSetup4($data)
+    {
+        $x = new ehough_shortstop_impl_exec_DefaultHttpMessageParser();
 
-        $this->_mockHttpMessageParser->shouldReceive('getArrayOfHeadersFromRawHeaderString')->andReturnUsing(function ($data) {
-
-            $x = new ehough_shortstop_impl_exec_DefaultHttpMessageParser();
-
-            return $x->getArrayOfHeadersFromRawHeaderString($data);
-
-        });
-
-        $this->_mockHttpMessageParser->shouldReceive('getHeaderArrayAsString')->andReturnUsing(function ($data) {
-
-            $x = new ehough_shortstop_impl_exec_DefaultHttpMessageParser();
-
-            return $x->getHeaderArrayAsString($data);
-        });
+        return $x->getHeaderArrayAsString($data);
     }
 
     public function testGet200Plain()
@@ -112,28 +115,12 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommandTe
         $request->setHeader(ehough_shortstop_api_HttpRequest::HTTP_HEADER_USER_AGENT, 'TubePress');
         $context->put('request', $request);
 
-        $self = $this->_sut;
+        $this->_closureVarRequest = $request;
 
-        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::TRANSPORT_SELECTED, ehough_mockery_Mockery::on(function ($event) use ($self, $request) {
-
-            return $event instanceof ehough_tickertape_GenericEvent && $event->getSubject() === $self && $event->getArgument('request') === $request;
-        }));
-
-        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::TRANSPORT_INITIALIZED, ehough_mockery_Mockery::on(function ($event) use ($self, $request) {
-
-            return $event instanceof ehough_tickertape_GenericEvent && $event->getSubject() === $self && $event->getArgument('request') === $request;
-        }));
-
-        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::TRANSPORT_TORNDOWN, ehough_mockery_Mockery::on(function ($event) use ($self, $request) {
-
-            return $event instanceof ehough_tickertape_GenericEvent && $event->getSubject() === $self && $event->getArgument('request') === $request;
-        }));
-
-        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::TRANSPORT_SUCCESS, ehough_mockery_Mockery::on(function ($event) use ($self, $request) {
-
-            return $event instanceof ehough_tickertape_GenericEvent && $event->getSubject() === $self && $event->getArgument('request') === $request
-                && $event->getArgument('response') instanceof ehough_shortstop_api_HttpResponse;
-        }));
+        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::TRANSPORT_SELECTED, ehough_mockery_Mockery::on(array($this, '_callbackTestGet1')));
+        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::TRANSPORT_INITIALIZED, ehough_mockery_Mockery::on(array($this, '_callbackTestGet2')));
+        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::TRANSPORT_TORNDOWN, ehough_mockery_Mockery::on(array($this, '_callbackTestGet3')));
+        $this->_mockEventDispatcher->shouldReceive('dispatch')->once()->with(ehough_shortstop_api_Events::TRANSPORT_SUCCESS, ehough_mockery_Mockery::on(array($this, '_callbackTestGet4')));
 
         $result = $this->_sut->execute($context);
 
@@ -170,6 +157,27 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommandTe
 
 
         $this->assertEquals($expected, $data);
+    }
+
+    public function _callbackTestGet1($event)
+    {
+        return $event instanceof ehough_tickertape_GenericEvent && $event->getSubject() === $this->_sut && $event->getArgument('request') === $this->_closureVarRequest;
+    }
+
+    public function _callbackTestGet2($event)
+    {
+        return $event instanceof ehough_tickertape_GenericEvent && $event->getSubject() === $this->_sut && $event->getArgument('request') === $this->_closureVarRequest;
+    }
+
+    public function _callbackTestGet3($event)
+    {
+        return $event instanceof ehough_tickertape_GenericEvent && $event->getSubject() === $this->_sut && $event->getArgument('request') === $this->_closureVarRequest;
+    }
+
+    public function _callbackTestGet4($event)
+    {
+        return $event instanceof ehough_tickertape_GenericEvent && $event->getSubject() === $this->_sut && $event->getArgument('request') === $this->_closureVarRequest
+            && $event->getArgument('response') instanceof ehough_shortstop_api_HttpResponse;
     }
 
     protected abstract function _getSutInstance(ehough_shortstop_spi_HttpMessageParser $mp, ehough_tickertape_EventDispatcherInterface $ed);

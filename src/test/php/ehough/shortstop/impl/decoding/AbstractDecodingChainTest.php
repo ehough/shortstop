@@ -31,6 +31,9 @@ abstract class ehough_shortstop_impl_decoding_AbstractDecodingChainTest extends 
      */
     private $_chain;
 
+    private $_closureVarCtx;
+    private $_closureVarResponse;
+
     public function setup()
     {
         $this->_chain    = ehough_mockery_Mockery::mock('ehough_chaingang_api_Chain');
@@ -43,15 +46,18 @@ abstract class ehough_shortstop_impl_decoding_AbstractDecodingChainTest extends 
     {
         $ctx = $this->_response;
 
-        $this->_chain->shouldReceive('execute')->once()->with(ehough_mockery_Mockery::on(function ($arg) use ($ctx) {
+        $this->_closureVarCtx = $ctx;
 
-            return $ctx === $arg->get('response');
-
-        }))->andReturn(false);
+        $this->_chain->shouldReceive('execute')->once()->with(ehough_mockery_Mockery::on(array($this, '_callbackTestCannotDecode')))->andReturn(false);
 
         $this->_sut->decode($this->_response);
 
         $this->assertTrue(true);
+    }
+
+    public function _callbackTestCannotDecode($arg)
+    {
+        return $this->_closureVarCtx === $arg->get('response');
     }
 
     public function testDecode()
@@ -60,20 +66,23 @@ abstract class ehough_shortstop_impl_decoding_AbstractDecodingChainTest extends 
         $response->setEntity($this->_entity);
         $response->setHeader(ehough_shortstop_api_HttpMessage::HTTP_HEADER_CONTENT_TYPE, 'fooey');
 
-        $this->_chain->shouldReceive('execute')->once()->with(ehough_mockery_Mockery::on(function ($arg) use ($response) {
+        $this->_closureVarResponse = $response;
 
-            $ok = $response === $arg->get('response');
-
-            $arg->put('response', 'decodeddecoded');
-
-            return $ok;
-
-        }))->andReturn(true);
+        $this->_chain->shouldReceive('execute')->once()->with(ehough_mockery_Mockery::on(array($this, '_callbackTestDecode')))->andReturn(true);
 
         $this->_sut->decode($this->_response);
 
         $this->assertEquals('decodeddecoded', $this->_response->getEntity()->getContent());
         $this->assertTrue($this->_response->getEntity()->getContentLength() === 14);
+    }
+
+    public function _callbackTestDecode($arg)
+    {
+        $ok = $this->_closureVarResponse === $arg->get('response');
+
+        $arg->put('response', 'decodeddecoded');
+
+        return $ok;
     }
 
     public function testIsEncoded()
