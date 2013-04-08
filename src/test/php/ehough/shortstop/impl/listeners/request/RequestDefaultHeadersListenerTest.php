@@ -25,7 +25,40 @@ class ehough_shortstop_impl_listeners_request_RequestDefaultHeadersListenerTest 
         $this->_sut = new ehough_shortstop_impl_listeners_request_RequestDefaultHeadersListener($this->_mockHttpContentDecoder);
     }
 
-    public function testOnRequest()
+    public function testOnRequestEntity()
+    {
+        $request = new ehough_shortstop_api_HttpRequest(ehough_shortstop_api_HttpRequest::HTTP_METHOD_GET, 'http://ehough.com');
+        $entity = new ehough_shortstop_api_HttpEntity();
+        $entity->setContent('foobar');
+        $entity->setContentType('something');
+        $request->setEntity($entity);
+        $event   = new ehough_tickertape_GenericEvent($request);
+
+        $this->_mockHttpContentDecoder->shouldReceive('getAcceptEncodingHeaderValue')->once()->andReturn('foobarr');
+
+        $this->_sut->onPreRequest($event);
+
+        $this->assertEquals('foobarr', $request->getHeaderValue(ehough_shortstop_api_HttpRequest::HTTP_HEADER_ACCEPT_ENCODING));
+        $this->assertEquals('shortstop; https://github.com/ehough/shortstop', $request->getHeaderValue(ehough_shortstop_api_HttpRequest::HTTP_HEADER_USER_AGENT));
+        $this->assertEquals('HTTP/1.0', $request->getHeaderValue(ehough_shortstop_api_HttpRequest::HTTP_HEADER_HTTP_VERSION));
+    }
+
+    public function testOnRequestEntityNoContentOrType()
+    {
+        $request = new ehough_shortstop_api_HttpRequest(ehough_shortstop_api_HttpRequest::HTTP_METHOD_GET, 'http://ehough.com');
+        $request->setEntity(new ehough_shortstop_api_HttpEntity());
+        $event   = new ehough_tickertape_GenericEvent($request);
+
+        $this->_mockHttpContentDecoder->shouldReceive('getAcceptEncodingHeaderValue')->once()->andReturn('foobarr');
+
+        $this->_sut->onPreRequest($event);
+
+        $this->assertEquals('foobarr', $request->getHeaderValue(ehough_shortstop_api_HttpRequest::HTTP_HEADER_ACCEPT_ENCODING));
+        $this->assertEquals('shortstop; https://github.com/ehough/shortstop', $request->getHeaderValue(ehough_shortstop_api_HttpRequest::HTTP_HEADER_USER_AGENT));
+        $this->assertEquals('HTTP/1.0', $request->getHeaderValue(ehough_shortstop_api_HttpRequest::HTTP_HEADER_HTTP_VERSION));
+    }
+
+    public function testOnRequestNoEntity()
     {
         $request = new ehough_shortstop_api_HttpRequest(ehough_shortstop_api_HttpRequest::HTTP_METHOD_GET, 'http://ehough.com');
         $event   = new ehough_tickertape_GenericEvent($request);

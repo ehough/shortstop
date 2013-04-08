@@ -24,6 +24,9 @@ class ehough_shortstop_impl_listeners_request_RequestLoggingListenerTest extends
     public function testOnRequest()
     {
         $request = new ehough_shortstop_api_HttpRequest(ehough_shortstop_api_HttpRequest::HTTP_METHOD_GET, 'http://ehough.com');
+
+        $request->setHeader('foo', 'bar');
+
         $event   = new ehough_tickertape_GenericEvent($request);
 
         $this->_sut->onPreRequest($event);
