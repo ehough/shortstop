@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-require_once(__DIR__ . '/../../../../../../../resources/data.inc.txt');
+require_once(dirname(__FILE__) . '/../../../../../../../resources/data.inc.txt');
 
 abstract class ehough_shortstop_impl_decoding_content_command_AbstractContentDecompressingCommandTest extends PHPUnit_Framework_TestCase
 {
