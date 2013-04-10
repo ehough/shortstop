@@ -11,12 +11,12 @@
 
 class ehough_shortstop_impl_exec_command_CurlCommandTest extends ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommandTest
 {
-    protected function _getSutInstance(ehough_shortstop_spi_HttpMessageParser $mp, ehough_tickertape_EventDispatcherInterface $ed)
+    protected function getSutInstance(ehough_shortstop_spi_HttpMessageParser $mp, ehough_tickertape_EventDispatcherInterface $ed)
     {
         return new ehough_shortstop_impl_exec_command_CurlCommand($mp, $ed);
     }
 
-    protected function _isAvailable()
+    protected function isAvailable()
     {
         return function_exists('curl_init');
     }

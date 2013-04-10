@@ -65,9 +65,9 @@ class ehough_shortstop_impl_listeners_request_RequestDefaultHeadersListener
             return;
         }
 
-        $contentLength  = $entity->getContentLength();
-        $content        = $entity->getContent();
-        $type           = $entity->getContentType();
+        $contentLength = $entity->getContentLength();
+        $content       = $entity->getContent();
+        $type          = $entity->getContentType();
 
         if ($content !== null && $contentLength !== null && $type !== null) {
 
@@ -113,7 +113,7 @@ class ehough_shortstop_impl_listeners_request_RequestDefaultHeadersListener
 
             if ($this->_isDebugEnabled) {
 
-                $this->_logger->debug('HTTP decompression is available. Yeah!');
+                $this->_logger->debug('HTTP decompression is available.');
             }
 
             $request->setHeader(ehough_shortstop_api_HttpRequest::HTTP_HEADER_ACCEPT_ENCODING, $header);
@@ -122,7 +122,7 @@ class ehough_shortstop_impl_listeners_request_RequestDefaultHeadersListener
 
             if ($this->_isDebugEnabled) {
 
-                $this->_logger->debug('HTTP decompression is NOT available. Boo.');
+                $this->_logger->debug('HTTP decompression is NOT available.');
             }
         }
     }
