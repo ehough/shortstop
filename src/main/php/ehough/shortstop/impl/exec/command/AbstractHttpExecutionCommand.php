@@ -65,21 +65,13 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
 
             if ($isDebugEnabled) {
 
-                $logger->debug(sprintf('Declined to handle %s', $request));
+                $logger->debug(sprintf('Unavailable or declined to handle %s', $request));
             }
 
             return false;
         }
 
-        $okToUseTransportEvent = new ehough_tickertape_GenericEvent($this, array(
-
-                'ok'      => true,
-                'request' => $request
-            )
-        );
-        $this->_eventDispatcher->dispatch(ehough_shortstop_api_Events::TRANSPORT_SELECTED, $okToUseTransportEvent);
-
-        if (! $okToUseTransportEvent->getArgument('ok')) {
+        if ($this->_objectionsToTransportSelection($request)) {
 
             if ($isDebugEnabled) {
 
@@ -96,23 +88,25 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
 
         try {
 
-            $context->put('response', $this->handle($request));
+            $response = $this->handle($request);
 
-            $transportSuccessEvent = new ehough_tickertape_GenericEvent($this,
-                array('request' => $request, 'response' => $context->get('response')));
+            $context->put('response', $response);
+
+            /**
+             * Fire a success event.
+             */
+            $transportSuccessEvent = new ehough_tickertape_GenericEvent($this, array(
+
+                'request'  => $request,
+                'response' => $response
+            ));
             $this->_eventDispatcher->dispatch(ehough_shortstop_api_Events::TRANSPORT_SUCCESS, $transportSuccessEvent);
 
             return true;
 
         } catch (Exception $e) {
 
-            $transportFailureEvent = new ehough_tickertape_GenericEvent($this,
-                array('request' => $request, 'response' => $context->get('response'), 'exception' => $e));
-            $this->_eventDispatcher->dispatch(ehough_shortstop_api_Events::TRANSPORT_FAILURE, $transportFailureEvent);
-
-            $logger->error(sprintf('Caught exception when handling %s (%s). Will re-throw after tear down.', $request, $e->getMessage()));
-            $this->_tearDown($request);
-            throw new ehough_shortstop_api_exception_RuntimeException($e->getMessage());
+            return $this->_handleTransportException($e, $request, $context, $isDebugEnabled, $logger);
         }
     }
 
@@ -162,7 +156,7 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
             $logger->debug(sprintf('Tearing down after %s', $request));
         }
 
-        $this->_tearDown($request);
+        $this->_tearDown($request, false);
 
         if ($isDebugEnabled) {
 
@@ -172,14 +166,18 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
         return $response;
     }
 
-    private function _tearDown(ehough_shortstop_api_HttpRequest $request)
+    private function _tearDown(ehough_shortstop_api_HttpRequest $request, $becauseOfError)
     {
         $this->tearDown();
 
         /**
          * Fire torn down event.
          */
-        $transportTornDownEvent = new ehough_tickertape_GenericEvent($this, array('request' => $request));
+        $transportTornDownEvent = new ehough_tickertape_GenericEvent($this, array(
+
+            'request'       => $request,
+            'becaseOfError' => $becauseOfError
+        ));
         $this->_eventDispatcher->dispatch(ehough_shortstop_api_Events::TRANSPORT_TORNDOWN, $transportTornDownEvent);
     }
 
@@ -288,12 +286,12 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
             $response->setHeader($name, $value);
         }
 
-        $logger = $this->getLogger();
-
         /* do some logging */
         if ($debugging) {
 
             $headerArray = $response->getAllHeaders();
+
+            $logger = $this->getLogger();
 
             $logger->debug(sprintf('Here are the ' . count($headerArray) . ' headers in the response for %s', $request));
 
@@ -323,5 +321,67 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
         }
 
         $response->setEntity($entity);
+    }
+
+    private function _objectionsToTransportSelection(ehough_shortstop_api_HttpRequest $request)
+    {
+        /**
+         * Fire the selection through filters to allow anyone to veto it.
+         */
+        $okToUseTransportEvent = new ehough_tickertape_GenericEvent($this, array(
+
+                'ok'      => true,
+                'request' => $request
+            )
+        );
+        $this->_eventDispatcher->dispatch(ehough_shortstop_api_Events::TRANSPORT_SELECTED, $okToUseTransportEvent);
+
+        return ! $okToUseTransportEvent->getArgument('ok');
+    }
+
+    private function _handleTransportException(Exception $e, ehough_shortstop_api_HttpRequest $request, ehough_chaingang_api_Context $context,
+        $isDebugEnabled, ehough_epilog_psr_LoggerInterface $logger)
+    {
+        $this->_tearDown($request, true);
+
+        /**
+         * Fire an error event.
+         */
+        $transportFailureEvent = new ehough_tickertape_GenericEvent($this, array(
+
+            'request'            => $request,
+            'response'           => $context->containsKey('response') ? $context->get('response') : null,
+            'exception'          => $e,
+            'rethrow'            => false,
+            'tryOtherTransports' => true
+        ));
+        $this->_eventDispatcher->dispatch(ehough_shortstop_api_Events::TRANSPORT_FAILURE, $transportFailureEvent);
+
+        if ($transportFailureEvent->getArgument('rethrow')) {
+
+            if ($isDebugEnabled) {
+
+                $logger->error(sprintf('Caught exception when handling %s (%s). Will re-throw.', $request, $e->getMessage()));
+            }
+
+            throw new ehough_shortstop_api_exception_RuntimeException($e->getMessage());
+        }
+
+        if ($transportFailureEvent->getArgument('tryOtherTransports')) {
+
+            if ($isDebugEnabled) {
+
+                $logger->debug('Transport failed, but trying the next...');
+            }
+
+            return false;
+        }
+
+        if ($isDebugEnabled) {
+
+            $logger->debug('Transport failed, and not trying any others...');
+        }
+
+        return true;
     }
 }
