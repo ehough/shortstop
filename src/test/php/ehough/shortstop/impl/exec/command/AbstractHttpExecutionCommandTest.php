@@ -11,7 +11,7 @@
 
 abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommandTest extends PHPUnit_Framework_TestCase
 {
-    private static $_baseServerPath = 'http://tubepress.org/http_tests';
+    private static $_baseServerPath = 'http://httptests.dev.tubepress.com';
 
     /**
      * @var ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
@@ -65,7 +65,7 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommandTe
         $this->assertEquals(200, $response->getStatusCode(), get_class($this->_sut) . ' reported the wrong status code');
         $this->assertStringStartsWith('text/html', $response->getEntity()->getContentType(), get_class($this->_sut) . ' reported the wrong content type');
         $this->assertEquals($this->_contents200Plain(), $response->getEntity()->getContent(), get_class($this->_sut) . ' reported the wrong content');
-        $this->assertEquals(34, $response->getEntity()->getContentLength(), get_class($this->_sut) . ' reported the wrong content length');
+        $this->assertEquals(35, $response->getEntity()->getContentLength(), get_class($this->_sut) . ' reported the wrong content length');
     }
 
     private function _run404Test()
@@ -226,6 +226,7 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommandTe
     {
         return <<<EOT
 random stuff!
+
 here's another line
 
 EOT;
