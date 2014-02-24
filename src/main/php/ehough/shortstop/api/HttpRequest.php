@@ -20,6 +20,7 @@ class ehough_shortstop_api_HttpRequest extends ehough_shortstop_api_HttpMessage
     const HTTP_METHOD_GET  = 'GET';
     const HTTP_METHOD_POST = 'POST';
     const HTTP_METHOD_PUT  = 'PUT';
+    const HTTP_METHOD_DELETE  = 'DELETE';
 
     private $_method;
 
