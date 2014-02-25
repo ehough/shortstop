@@ -193,7 +193,7 @@ class ehough_shortstop_impl_exec_command_CurlCommand extends ehough_shortstop_im
 
         ));
 
-        $this->_setCurlOptionsFollowLocation();
+        // $this->_setCurlOptionsFollowLocation();
         $this->_setCurlOptionsBody($request);
         $this->_setCurlOptionsHeaders($request);
     }

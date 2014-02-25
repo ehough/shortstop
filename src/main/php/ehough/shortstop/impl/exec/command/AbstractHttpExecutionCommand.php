@@ -87,8 +87,23 @@ abstract class ehough_shortstop_impl_exec_command_AbstractHttpExecutionCommand
         }
 
         try {
+            do {
+                if (isset($location)) {
+                    $url = $request->getUrl()->toString();
 
-            $response = $this->handle($request);
+                    if (preg_match('/:\/\//', $location)) {
+                    } else if (preg_match('/^\//', $location)) {
+                        $location = sprintf('%s://%s%s', parse_url($url, PHP_URL_SCHEME), parse_url($url, PHP_URL_HOST), $location);
+                    } else {
+                        $location = sprintf('%s/%s', dirname($url), $location);
+                    }
+
+                    $request->setMethod(ehough_shortstop_api_HttpRequest::HTTP_METHOD_GET);
+                    $request->setUrl($location);
+                }
+
+                $response = $this->handle($request);
+            } while ($location = $response->getHeaderValue('Location'));
 
             $context->put('response', $response);
 
