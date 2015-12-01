@@ -193,7 +193,7 @@ class ehough_shortstop_impl_exec_command_CurlCommand extends ehough_shortstop_im
 
         ));
 
-        $this->_setCurlOptionsFollowLocation();
+        // $this->_setCurlOptionsFollowLocation();
         $this->_setCurlOptionsBody($request);
         $this->_setCurlOptionsHeaders($request);
     }
@@ -225,6 +225,12 @@ class ehough_shortstop_impl_exec_command_CurlCommand extends ehough_shortstop_im
 
                 curl_setopt($this->_handle, CURLOPT_CUSTOMREQUEST, ehough_shortstop_api_HttpRequest::HTTP_METHOD_PUT);
                 curl_setopt($this->_handle, CURLOPT_POSTFIELDS, $body);
+
+                break;
+
+            case ehough_shortstop_api_HttpRequest::HTTP_METHOD_DELETE:
+
+                curl_setopt($this->_handle, CURLOPT_CUSTOMREQUEST, ehough_shortstop_api_HttpRequest::HTTP_METHOD_DELETE);
 
                 break;
         }
